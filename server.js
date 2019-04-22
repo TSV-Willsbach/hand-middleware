@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import Player from './models/Player';
 import Team from './models/Team';
 
+const port = process.env.PORT || 4000;
+
 const app = express();
 const router = express.Router();
 
@@ -107,4 +109,4 @@ router.route('/players/delete/:id').get((req, res) => {
 
 app.use('/', router);
 
-app.listen(4000, () => console.log('Express server running on port 4000'));
+app.listen(port, () => console.log(`Express server running on port ${port}`));
