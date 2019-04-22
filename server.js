@@ -14,7 +14,6 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-// mongoose.connect('mongodb+srv://miguel:tYxtxrGvn9hyNSi@cluster0-pi16x.mongodb.net/wh?retryWrites=true');
 mongoose.connect('mongodb://localhost:27017');
 const connection = mongoose.connection;
 
