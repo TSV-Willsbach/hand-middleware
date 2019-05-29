@@ -7,14 +7,14 @@ let Team = new Schema({
     name: {
         type: String
     },
-    players: {
+    players: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Player'
-    },
-    coaches: {
+    }],
+    coaches: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Player'
-    }
+    }]
 
 });
 
