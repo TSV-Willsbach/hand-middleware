@@ -5,12 +5,14 @@ const teamRouter = express.Router();
 
 teamRouter.route('/').get((req, res) => {
     Team.find((err, teams) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(teams);
-        }
-    })
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(teams);
+            }
+        })
+        .populate('players')
+        .populate('coaches')
 });
 
 teamRouter.route('/:id').get((req, res) => {

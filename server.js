@@ -14,15 +14,17 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/persons');
+mongoose.connect('mongodb+srv://default:zhDLnu7Y8RK3RzRr@cluster0-pi16x.mongodb.net/wh', {
+    useNewUrlParser: true
+});
 const connection = mongoose.connection;
 
 connection.once('open', () => {
     console.log('MongoDB connection established successfully');
 });
 
-app.use('/api/players', playerRouter);
 app.use('/api/teams', teamRouter);
+app.use('/api/players', playerRouter);
 
 app.use('/', router);
 
