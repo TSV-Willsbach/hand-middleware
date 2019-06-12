@@ -24,6 +24,8 @@ teamRouter.get('/:id', (req, res) => {
             res.json(team);
         }
     })
+    .populate('players')
+    .populate('coaches')
 });
 
 module.exports = teamRouter;
