@@ -1,9 +1,10 @@
-import express from 'express';
-import Team from '../models/Team';
+const express = require('express');
+const Team = require('../models/Team');
+
 
 const teamRouter = express.Router();
 
-teamRouter.route('/').get((req, res) => {
+teamRouter.get('/', (req, res) => {
     Team.find((err, teams) => {
             if (err) {
                 console.log(err);
@@ -15,7 +16,7 @@ teamRouter.route('/').get((req, res) => {
         .populate('coaches')
 });
 
-teamRouter.route('/:id').get((req, res) => {
+teamRouter.get('/:id', (req, res) => {
     Team.findById(req.params.id, (err, team) => {
         if (err) {
             console.log(err);
@@ -25,4 +26,4 @@ teamRouter.route('/:id').get((req, res) => {
     })
 });
 
-export default teamRouter;
+module.exports = teamRouter;

@@ -1,9 +1,9 @@
-import express from 'express';
-import Player from '../models/Player';
+const express = require('express');
+const Player = require('../models/Player');
 
 const playerRouter = express.Router();
 
-playerRouter.route('/').get((req, res) => {
+playerRouter.get('/', (req, res) => {
     Player.find((err, players) => {
         if (err) {
             console.log(err);
@@ -13,7 +13,7 @@ playerRouter.route('/').get((req, res) => {
     })
 });
 
-playerRouter.route('/:id').get((req, res) => {
+playerRouter.get('/:id', (req, res) => {
     Player.findById(req.params.id, (err, player) => {
         if (err) {
             console.log(err);
@@ -23,7 +23,7 @@ playerRouter.route('/:id').get((req, res) => {
     })
 });
 
-playerRouter.route('/add').post((req, res) => {
+playerRouter.post('/add', (req, res) => {
     let player = new Player(req.body);
     player.save()
         .then(player => {
@@ -36,7 +36,7 @@ playerRouter.route('/add').post((req, res) => {
         });
 });
 
-playerRouter.route('/update/:id').post((req, res) => {
+playerRouter.post('/update/:id', (req, res) => {
     Player.findById(req.params.id, (err, player) => {
         if (!player) {
             return next(new Error('Could not load document'));
@@ -56,7 +56,7 @@ playerRouter.route('/update/:id').post((req, res) => {
     });
 });
 
-playerRouter.route('/delete/:id').get((req, res) => {
+playerRouter.get('/delete/:id', (req, res) => {
     Player.findByIdAndRemove({
         _id: req.params.id
     }, (err, player) => {
@@ -68,4 +68,4 @@ playerRouter.route('/delete/:id').get((req, res) => {
     });
 });
 
-export default playerRouter;
+module.exports = playerRouter;
