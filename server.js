@@ -14,7 +14,7 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://default:zhDLnu7Y8RK3RzRr@cluster0-pi16x.mongodb.net/wh', {
+mongoose.connect(`mongodb+srv://${process.env.userID}@cluster0-pi16x.mongodb.net/wh`, {
     useNewUrlParser: true
 });
 const connection = mongoose.connection;
