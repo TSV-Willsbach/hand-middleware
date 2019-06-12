@@ -1,10 +1,18 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
+//import express from 'express';
+//import cors from 'cors';
+//import bodyParser from 'body-parser';
+//import mongoose from 'mongoose';
 
-import playerRouter from './routes/playerRouter';
-import teamRouter from './routes/teamRouter';
+//import playerRouter from './routes/playerRouter';
+//import teamRouter from './routes/teamRouter';
+
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const playerRouter = require('./routes/playerRouter');
+const teamRouter = require('./routes/teamRouter');
 
 const port = process.env.PORT || 4000;
 
