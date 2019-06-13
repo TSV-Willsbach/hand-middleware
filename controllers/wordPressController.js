@@ -1,5 +1,5 @@
 const request = require('request');
-
+const globalController = require('./globalController');
 
 const uri = 'https://wp.willsbach-handball.de/wp-json/wp/v2/'
 
@@ -23,12 +23,7 @@ exports.getPosts = (req, res, next) => {
 }
 
 exports.getReports = (req, res, next) => {
-    var hostName;
-    if (req.headers.host.indexOf('localhost') > -1) {
-        hostName = `http://${req.headers.host}`;
-    } else {
-        hostName = `https://${req.headers.host}`;
-    }
+    const hostName = globalController.getHostname(req);
 
     request.get(`${hostName}/api/wp/posts?category=6`, {
         json: true

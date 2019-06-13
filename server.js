@@ -26,6 +26,7 @@ app.get('/', router);
 app.use('/api/teams', require('./routes/teamRouter'));
 app.use('/api/players', require('./routes/playerRouter'));
 app.use('/api/wp', require('./routes/wordPressRouter'));
+app.use('/api/hvw', require('./routes/hvwRouter'));
 
 
 app.listen(port, () => console.log(`Express server running on port ${port}`));
