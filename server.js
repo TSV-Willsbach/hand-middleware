@@ -3,9 +3,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const playerRouter = require('./routes/playerRouter');
-const teamRouter = require('./routes/teamRouter');
-
 const port = process.env.PORT || 4000;
 const user = process.env.userID || 'default:zhDLnu7Y8RK3RzRr';
 
@@ -26,8 +23,9 @@ connection.once('open', () => {
 
 
 app.get('/', router);
-app.use('/api/teams', teamRouter);
-app.use('/api/players', playerRouter);
+app.use('/api/teams', require('./routes/teamRouter'));
+app.use('/api/players', require('./routes/playerRouter'));
+app.use('/api/wp', require('./routes/wordPressRouter'));
 
 
 app.listen(port, () => console.log(`Express server running on port ${port}`));
