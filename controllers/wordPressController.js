@@ -22,6 +22,17 @@ exports.getPosts = (req, res, next) => {
 
 }
 
+exports.getPost = (req, res, next) => {
+    var path = uri + `posts/${req.params.id}?_embed`;
+
+    request.get(path, {
+        json: true
+    }, function (error, response, body) {
+        res.json(body);
+    });
+
+}
+
 exports.getReports = (req, res, next) => {
     const hostName = globalController.getHostname(req);
 
