@@ -7,6 +7,7 @@ const playerRouter = require('./routes/playerRouter');
 const teamRouter = require('./routes/teamRouter');
 
 const port = process.env.PORT || 4000;
+const user = process.env.userID || 'default:zhDLnu7Y8RK3RzRr';
 
 const app = express();
 const router = express.Router();
@@ -14,7 +15,7 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect(`mongodb+srv://${process.env.userID}@cluster0-pi16x.mongodb.net/wh`, {
+mongoose.connect(`mongodb+srv://${user}@cluster0-pi16x.mongodb.net/wh`, {
     useNewUrlParser: true
 });
 const connection = mongoose.connection;

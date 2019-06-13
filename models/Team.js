@@ -1,8 +1,4 @@
-// import mongoose from 'mongoose';
-// import Player from './Player';
-
 const mongoose = require('mongoose');
-const Player = require('./Player');
 
 const Schema = mongoose.Schema;
 
@@ -12,14 +8,16 @@ let Team = new Schema({
     },
     players: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Player'
+        ref: 'Player',
+        autopopulate: false
     }],
     coaches: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Player'
+        ref: 'Player',
+        autopopulate: false
     }]
 
 });
 
-// export default mongoose.model('Team', Team);
+Team.plugin(require('mongoose-autopopulate'));
 module.exports = mongoose.model('Team', Team);
