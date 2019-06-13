@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const port = process.env.PORT || 4000;
-const user = process.env.userID || 'default:zhDLnu7Y8RK3RzRr';
+const user = process.env.userID;
 
 const app = express();
 const router = express.Router();
