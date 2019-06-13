@@ -1,5 +1,4 @@
 const express = require('express');
-const Team = require('../models/Team');
 const teamController = require('../controllers/teamController');
 
 
