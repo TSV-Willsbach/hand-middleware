@@ -18,15 +18,15 @@ export class Routes {
                 })
             });
 
-        app.route('/wp/posts')
-            .get(this.wpController.getPosts);
+        // app.route('/wp/posts')
+        //     .get(this.wpController.getPosts);
 
-        app.route('/teams')
-            .get(this.teamController.getTeams)
-            .post(this.teamController.addNewTeam);
+        // app.route('/teams')
+        //     .get(this.teamController.getTeams)
+        //     .post(this.teamController.addNewTeam);
 
-        app.route('/teams/:teamId')
-            .get(this.teamController.getSingleTeam);
+        // app.route('/teams/:teamId')
+        //     .get(this.teamController.getSingleTeam);
 
         // app.route('/players')
         //     .get(this.playerController.getPlayers)

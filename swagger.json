@@ -3,7 +3,72 @@
 	"consumes": [
 		"application/json"
 	],
-	"definitions": {},
+	"definitions": {
+		"Player": {
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"prename": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"number": {
+					"type": "number",
+					"format": "double"
+				},
+				"birthday": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"coach": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Player"
+					},
+					"x-nullable": true
+				},
+				"team": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Team"
+					},
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"_id",
+				"prename",
+				"name",
+				"number"
+			],
+			"type": "object"
+		},
+		"Team": {
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"players": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Player"
+					}
+				}
+			},
+			"required": [
+				"_id",
+				"name",
+				"players"
+			],
+			"type": "object"
+		}
+	},
 	"info": {
 		"title": "wh_middleware",
 		"version": "1.0.0",
@@ -11,7 +76,224 @@
 			"name": "ISC"
 		}
 	},
-	"paths": {},
+	"paths": {
+		"/players": {
+			"post": {
+				"operationId": "AddNewPlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Player created"
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "requstBody",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Player"
+						}
+					}
+				]
+			},
+			"get": {
+				"operationId": "GetPlayers",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/players/{id}": {
+			"get": {
+				"operationId": "GetSinglePlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/posts": {
+			"get": {
+				"operationId": "GetPosts",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "category",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/wp/posts/{id}": {
+			"get": {
+				"operationId": "GetPost",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/reports": {
+			"get": {
+				"operationId": "GetReports",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/teams": {
+			"get": {
+				"operationId": "GetTeams",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/teams/{id}": {
+			"get": {
+				"operationId": "GetSingleTeam",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		}
+	},
 	"produces": [
 		"application/json"
 	],

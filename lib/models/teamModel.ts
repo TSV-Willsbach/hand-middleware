@@ -1,6 +1,13 @@
 import * as mongoose from 'mongoose';
+import { Player } from './playerModel';
 
 const Schema = mongoose.Schema;
+
+export interface Team {
+    _id: string;
+    name: string;
+    players: Array<Player>;
+}
 
 export const TeamSchema = new Schema({
     name: {

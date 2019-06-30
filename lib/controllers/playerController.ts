@@ -1,24 +1,26 @@
 import * as mongoose from 'mongoose';
-import { PlayerSchema } from '../models/playerModel';
+import { Player, PlayerSchema } from '../models/playerModel';
 import { Request, Response } from 'express';
-import { Route, Controller, Post, Get, Path } from 'tsoa';
+import { Route, Controller, Post, Get, Path, Tags, SuccessResponse, Body } from 'tsoa';
 
 const Player = mongoose.model('Player', PlayerSchema);
 
 @Route('/players')
+@Tags('Players')
 export class PlayerController extends Controller {
 
-    // @Post('/')
-    // public async addNewPlayer(): Promise<void> {
-    //     // let newPlayer = new Player(req.body);
+    @SuccessResponse('201', 'Player created')
+    @Post('/')
+    public async addNewPlayer(@Body() requstBody: Player): Promise<void> {
+        // let newPlayer = new Player(req.body);
 
-    //     // newPlayer.save((err, Player) => {
-    //     //     if (err) {
-    //     //         res.send(err);
-    //     //     }
-    //     //     res.json(Player);
-    //     // });
-    // }
+        // newPlayer.save((err, Player) => {
+        //     if (err) {
+        //         res.send(err);
+        //     }
+        //     res.json(Player);
+        // });
+    }
 
     @Get('/')
     public async getPlayers() {
@@ -34,11 +36,16 @@ export class PlayerController extends Controller {
 
     }
 
-    // @Get('/{id}')
-    // public async getSinglePlayer(@Path('id') ID: number) {
-    //     return Player.findById(ID, (err, player) => {
+    @Get('/{id}')
+    public async getSinglePlayer(@Path('id') ID: string) {
+        try {
+            let player = await Player.findById(ID)
+                .populate('team');
+            return player;
 
-    //     })
-    //         .populate('team');
-    // }
+        } catch (err) {
+            this.setStatus(500);
+            console.error('Caught error', err);
+        }
+    }
 }

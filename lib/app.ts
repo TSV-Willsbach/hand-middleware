@@ -3,6 +3,9 @@ import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 import * as swaggerUi from 'swagger-ui-express';
 import { RegisterRoutes } from "./routes/routes";
+import './controllers/playerController';
+import './controllers/teamController';
+import './controllers/wpController';
 
 class App {
 

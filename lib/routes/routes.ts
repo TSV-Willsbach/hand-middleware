@@ -1,12 +1,184 @@
 /* tslint:disable */
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
+import { PlayerController } from './../controllers/playerController';
+import { WpController } from './../controllers/wpController';
+import { TeamController } from './../controllers/teamController';
 import * as express from 'express';
 
 const models: TsoaRoute.Models = {
+    "Player": {
+        "properties": {
+            "_id": { "dataType": "string", "required": true },
+            "prename": { "dataType": "string", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "number": { "dataType": "double", "required": true },
+            "birthday": { "dataType": "string" },
+            "coach": { "dataType": "array", "array": { "ref": "Player" } },
+            "team": { "dataType": "array", "array": { "ref": "Team" } },
+        },
+    },
+    "Team": {
+        "properties": {
+            "_id": { "dataType": "string", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "players": { "dataType": "array", "array": { "ref": "Player" }, "required": true },
+        },
+    },
 };
 const validationService = new ValidationService(models);
 
 export function RegisterRoutes(app: express.Express) {
+    app.post('/players',
+        function(request: any, response: any, next: any) {
+            const args = {
+                requstBody: { "in": "body", "name": "requstBody", "required": true, "ref": "Player" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PlayerController();
+
+
+            const promise = controller.addNewPlayer.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/players',
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PlayerController();
+
+
+            const promise = controller.getPlayers.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/players/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PlayerController();
+
+
+            const promise = controller.getSinglePlayer.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/wp/posts',
+        function(request: any, response: any, next: any) {
+            const args = {
+                page: { "in": "query", "name": "page", "dataType": "double" },
+                category: { "in": "query", "name": "category", "dataType": "double" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getPosts.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/wp/posts/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getPost.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/wp/reports',
+        function(request: any, response: any, next: any) {
+            const args = {
+                page: { "in": "query", "name": "page", "dataType": "double" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getReports.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams',
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getTeams.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
 
 
     function isController(object: any): object is Controller {
