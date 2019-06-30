@@ -1,0 +1,20 @@
+{
+	"basePath": "/",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {},
+	"info": {
+		"title": "wh_middleware",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		}
+	},
+	"paths": {},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {}
+}
