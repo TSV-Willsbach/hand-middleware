@@ -1,0 +1,434 @@
+{
+	"basePath": "/",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {
+		"Player": {
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"prename": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"number": {
+					"type": "number",
+					"format": "double"
+				},
+				"birthday": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"coach": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"x-nullable": true
+				},
+				"team": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"_id",
+				"prename",
+				"name",
+				"number"
+			],
+			"type": "object"
+		}
+	},
+	"info": {
+		"title": "wh_middleware",
+		"version": "0.0.5",
+		"description": "TSV Willsbach Handball API's",
+		"license": {
+			"name": "MIT"
+		}
+	},
+	"paths": {
+		"/players": {
+			"post": {
+				"operationId": "AddNewPlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "Player created"
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "requstBody",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Player"
+						}
+					}
+				]
+			},
+			"get": {
+				"operationId": "GetPlayers",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/players/{id}": {
+			"get": {
+				"operationId": "GetSinglePlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeletePlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdatePlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "requstBody",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Player"
+						}
+					}
+				]
+			}
+		},
+		"/wp/posts": {
+			"get": {
+				"operationId": "GetPosts",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "category",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/wp/posts/{id}": {
+			"get": {
+				"operationId": "GetPost",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/reports": {
+			"get": {
+				"operationId": "GetReports",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/teams": {
+			"get": {
+				"operationId": "GetTeams",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/teams/{id}": {
+			"get": {
+				"operationId": "GetSingleTeam",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/hvw/games": {
+			"get": {
+				"operationId": "GetGames",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "periode",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/hvw/games/{id}": {
+			"get": {
+				"operationId": "GetGame",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/hvw/ligue": {
+			"get": {
+				"operationId": "GetLigue",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		}
+	},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {},
+	"tags": [
+		{
+			"name": "HVW",
+			"description": "Services that call data from Handball4all",
+			"externalDocs": {
+				"description": "More about Handball4all",
+				"url": "https://www.handball4all.de"
+			}
+		},
+		{
+			"name": "Wordpress",
+			"description": "All wordpress services"
+		}
+	]
+}
