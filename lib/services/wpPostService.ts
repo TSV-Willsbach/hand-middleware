@@ -1,4 +1,4 @@
-import * as request from "request-promise-native";
+
 import { proxyService } from "./proxyService";
 
 export class wpPostService extends proxyService {
@@ -21,12 +21,12 @@ export class wpPostService extends proxyService {
             this.options.uri = this.options.uri + `&categories=${category}`;
         }
 
-        return request.get(this.options);
+        return this.request.get(this.options);
     }
 
     public getPost(id) {
         this.options.uri = this.uri + 'posts/' + id + `?_embed`;
-        return request.get(this.options);
+        return this.request.get(this.options);
     }
 
     public getReports(page) {

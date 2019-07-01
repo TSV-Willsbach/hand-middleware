@@ -3,6 +3,7 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } 
 import { PlayerController } from './../controllers/playerController';
 import { WpController } from './../controllers/wpController';
 import { TeamController } from './../controllers/teamController';
+import { hvwController } from './../controllers/hvwController';
 import * as express from 'express';
 
 const models: TsoaRoute.Models = {
@@ -13,7 +14,7 @@ const models: TsoaRoute.Models = {
             "name": { "dataType": "string", "required": true },
             "number": { "dataType": "double", "required": true },
             "birthday": { "dataType": "string" },
-            "coach": { "dataType": "array", "array": { "ref": "Player" } },
+            "coach": { "dataType": "array", "array": { "dataType": "string" } },
             "team": { "dataType": "array", "array": { "ref": "Team" } },
         },
     },
@@ -82,6 +83,45 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getSinglePlayer.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.delete('/players/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PlayerController();
+
+
+            const promise = controller.deletePlayer.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.put('/players/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+                requstBody: { "in": "body", "name": "requstBody", "required": true, "ref": "Player" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PlayerController();
+
+
+            const promise = controller.updatePlayer.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/wp/posts',
@@ -177,6 +217,63 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/hvw/games',
+        function(request: any, response: any, next: any) {
+            const args = {
+                periode: { "in": "query", "name": "periode", "dataType": "double" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new hvwController();
+
+
+            const promise = controller.getGames.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/hvw/games/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new hvwController();
+
+
+            const promise = controller.getGame.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/hvw/ligue',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "query", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new hvwController();
+
+
+            const promise = controller.getLigue.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
 

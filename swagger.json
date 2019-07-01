@@ -26,7 +26,7 @@
 				"coach": {
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/Player"
+						"type": "string"
 					},
 					"x-nullable": true
 				},
@@ -147,6 +147,60 @@
 						"name": "id",
 						"required": true,
 						"type": "string"
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeletePlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdatePlayer",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Players"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "requstBody",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Player"
+						}
 					}
 				]
 			}
@@ -286,6 +340,91 @@
 				"parameters": [
 					{
 						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/hvw/games": {
+			"get": {
+				"operationId": "GetGames",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "periode",
+						"required": false,
+						"format": "double",
+						"type": "number"
+					}
+				]
+			}
+		},
+		"/hvw/games/{id}": {
+			"get": {
+				"operationId": "GetGame",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/hvw/ligue": {
+			"get": {
+				"operationId": "GetLigue",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
 						"name": "id",
 						"required": true,
 						"type": "string"

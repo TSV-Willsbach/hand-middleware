@@ -6,6 +6,7 @@ import { RegisterRoutes } from "./routes/routes";
 import './controllers/playerController';
 import './controllers/teamController';
 import './controllers/wpController';
+import './controllers/hvwController';
 
 class App {
 

@@ -8,7 +8,7 @@ export interface Player {
     number: number;
     birthday?: string;
     coach?: Array<string>;
-    team?: Array<Team>;
+    team?: Array<string>;
 }
 
 const Schema = mongoose.Schema;

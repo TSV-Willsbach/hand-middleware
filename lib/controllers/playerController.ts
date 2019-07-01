@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Player, PlayerSchema } from '../models/playerModel';
-import { Request, Response } from 'express';
-import { Route, Controller, Post, Get, Path, Tags, SuccessResponse, Body } from 'tsoa';
+import { Route, Controller, Post, Get, Path, Tags, SuccessResponse, Body, Query, Delete, Put } from 'tsoa';
 
 const Player = mongoose.model('Player', PlayerSchema);
 
@@ -12,14 +11,8 @@ export class PlayerController extends Controller {
     @SuccessResponse('201', 'Player created')
     @Post('/')
     public async addNewPlayer(@Body() requstBody: Player): Promise<void> {
-        // let newPlayer = new Player(req.body);
-
-        // newPlayer.save((err, Player) => {
-        //     if (err) {
-        //         res.send(err);
-        //     }
-        //     res.json(Player);
-        // });
+        let newPlayer = new Player(requstBody);
+        newPlayer.save();
     }
 
     @Get('/')
@@ -47,5 +40,15 @@ export class PlayerController extends Controller {
             this.setStatus(500);
             console.error('Caught error', err);
         }
+    }
+
+    @Delete('/{id}')
+    public async deletePlayer(@Path('id') id: string) {
+        await Player.findByIdandRemove(id);
+    }
+
+    @Put('/{id}')
+    public async updatePlayer(@Path('id') id: string, @Body() requstBody: Player) {
+        await Player.findOneAndUpdate({ _id: id }, requstBody);
     }
 }
