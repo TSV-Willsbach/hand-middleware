@@ -12,7 +12,7 @@ class App {
 
     public app: express.Express;
     // public routePrv: Routes = new Routes();
-    private user = process.env.userID || 'default:zhDLnu7Y8RK3RzRr';
+    private user = process.env.userID;
     private mongoUrl: string = `mongodb+srv://${this.user}@cluster0-pi16x.mongodb.net/wh`;
 
     constructor() {

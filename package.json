@@ -14,7 +14,12 @@
     "type": "git",
     "url": "git+https://miggi12@bitbucket.org/tsvwillsbachhandball/middleware.git"
   },
-  "keywords": ["TSV", "TSV Willsbach", "Willsbach", "Willsbach Handball"],
+  "keywords": [
+    "TSV",
+    "TSV Willsbach",
+    "Willsbach",
+    "Willsbach Handball"
+  ],
   "author": "Miguel Gebhardt <miguel@willsbach-handball.de>",
   "license": "MIT",
   "homepage": "https://bitbucket.org/tsvwillsbachhandball/middleware",
