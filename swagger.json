@@ -216,6 +216,12 @@
 						"required": false,
 						"format": "double",
 						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sticky",
+						"required": false,
+						"type": "boolean"
 					}
 				]
 			}
@@ -273,6 +279,34 @@
 						"required": false,
 						"format": "double",
 						"type": "number"
+					}
+				]
+			}
+		},
+		"/wp/media/teams": {
+			"get": {
+				"operationId": "GetTeamPhotos",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "archived",
+						"required": false,
+						"type": "boolean"
 					}
 				]
 			}

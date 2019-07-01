@@ -1,6 +1,5 @@
-import { Controller, Route, Get, Tags, Request, Query, Path } from 'tsoa';
+import { Controller, Route, Get, Tags, Query, Path } from 'tsoa';
 import { wpPostService } from '../services/wpPostService';
-import express = require('express');
 
 @Route('/wp')
 @Tags('Wordpress')
@@ -10,8 +9,8 @@ export class WpController extends Controller {
 
 
     @Get('/posts/')
-    public async getPosts(@Query() page?: number, @Query() category?: number) {
-        return await new wpPostService().getPosts(page, category);
+    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() sticky?: boolean) {
+        return await new wpPostService().getPosts(page, category, sticky);
     }
 
     @Get('/posts/{id}')
@@ -22,5 +21,10 @@ export class WpController extends Controller {
     @Get('/reports')
     public async getReports(@Query() page?: number) {
         return await new wpPostService().getReports(page);
+    }
+
+    @Get('/media/teams')
+    public async getTeamPhotos(@Query() archived?: boolean) {
+        return await new wpPostService().getTeamPhotos(archived);
     }
 } 

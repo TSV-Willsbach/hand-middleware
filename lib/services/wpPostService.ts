@@ -10,7 +10,7 @@ export class wpPostService extends proxyService {
         this.options.uri = this.uri;
     }
 
-    public getPosts(page, category) {
+    public getPosts(page: number, category: number, sticky?: boolean) {
         this.options.uri = this.uri + 'posts/' + `?_embed`;
 
         if (page != null) {
@@ -20,6 +20,11 @@ export class wpPostService extends proxyService {
         if (category != null) {
             this.options.uri = this.options.uri + `&categories=${category}`;
         }
+
+        if (sticky != undefined) {
+            this.options.uri = this.options.uri + `&sticky=${sticky}`;
+        }
+
 
         return this.request.get(this.options);
     }
@@ -31,5 +36,11 @@ export class wpPostService extends proxyService {
 
     public getReports(page) {
         return this.getPosts(page, 6);
+    }
+
+    public getTeamPhotos(archived: boolean) {
+        this.options.uri = this.uri + 'media?_embed&search=teams';
+        console.log(this.options.uri);
+        return this.request.get(this.options);
     }
 }

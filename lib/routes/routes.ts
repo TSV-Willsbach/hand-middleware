@@ -122,6 +122,7 @@ export function RegisterRoutes(app: express.Express) {
             const args = {
                 page: { "in": "query", "name": "page", "dataType": "double" },
                 category: { "in": "query", "name": "category", "dataType": "double" },
+                sticky: { "in": "query", "name": "sticky", "dataType": "boolean" },
             };
 
             let validatedArgs: any[] = [];
@@ -173,6 +174,25 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getReports.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/wp/media/teams',
+        function(request: any, response: any, next: any) {
+            const args = {
+                archived: { "in": "query", "name": "archived", "dataType": "boolean" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getTeamPhotos.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/teams',
