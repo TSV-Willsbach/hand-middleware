@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Player, PlayerSchema } from '../models/playerModel';
-import { Route, Controller, Post, Get, Path, Tags, SuccessResponse, Body, Query, Delete, Put } from 'tsoa';
+import { Route, Controller, Post, Get, Path, Tags, SuccessResponse, Body, Delete, Put } from 'tsoa';
 
 const Player = mongoose.model('Player', PlayerSchema);
 

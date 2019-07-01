@@ -15,21 +15,14 @@ const models: TsoaRoute.Models = {
             "number": { "dataType": "double", "required": true },
             "birthday": { "dataType": "string" },
             "coach": { "dataType": "array", "array": { "dataType": "string" } },
-            "team": { "dataType": "array", "array": { "ref": "Team" } },
-        },
-    },
-    "Team": {
-        "properties": {
-            "_id": { "dataType": "string", "required": true },
-            "name": { "dataType": "string", "required": true },
-            "players": { "dataType": "array", "array": { "ref": "Player" }, "required": true },
+            "team": { "dataType": "array", "array": { "dataType": "string" } },
         },
     },
 };
 const validationService = new ValidationService(models);
 
 export function RegisterRoutes(app: express.Express) {
-    app.post('/players',
+    app.post('/api.willsbach-handball.de/players',
         function(request: any, response: any, next: any) {
             const args = {
                 requstBody: { "in": "body", "name": "requstBody", "required": true, "ref": "Player" },
@@ -48,7 +41,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.addNewPlayer.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/players',
+    app.get('/api.willsbach-handball.de/players',
         function(request: any, response: any, next: any) {
             const args = {
             };
@@ -66,7 +59,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getPlayers.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/players/:id',
+    app.get('/api.willsbach-handball.de/players/:id',
         function(request: any, response: any, next: any) {
             const args = {
                 ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
@@ -85,7 +78,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getSinglePlayer.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.delete('/players/:id',
+    app.delete('/api.willsbach-handball.de/players/:id',
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
@@ -104,7 +97,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.deletePlayer.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.put('/players/:id',
+    app.put('/api.willsbach-handball.de/players/:id',
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
@@ -124,7 +117,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.updatePlayer.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/wp/posts',
+    app.get('/api.willsbach-handball.de/wp/posts',
         function(request: any, response: any, next: any) {
             const args = {
                 page: { "in": "query", "name": "page", "dataType": "double" },
@@ -144,7 +137,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getPosts.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/wp/posts/:id',
+    app.get('/api.willsbach-handball.de/wp/posts/:id',
         function(request: any, response: any, next: any) {
             const args = {
                 ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
@@ -163,7 +156,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getPost.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/wp/reports',
+    app.get('/api.willsbach-handball.de/wp/reports',
         function(request: any, response: any, next: any) {
             const args = {
                 page: { "in": "query", "name": "page", "dataType": "double" },
@@ -182,7 +175,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getReports.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/teams',
+    app.get('/api.willsbach-handball.de/teams',
         function(request: any, response: any, next: any) {
             const args = {
             };
@@ -200,7 +193,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getTeams.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/teams/:id',
+    app.get('/api.willsbach-handball.de/teams/:id',
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
@@ -219,7 +212,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/hvw/games',
+    app.get('/api.willsbach-handball.de/hvw/games',
         function(request: any, response: any, next: any) {
             const args = {
                 periode: { "in": "query", "name": "periode", "dataType": "double" },
@@ -238,7 +231,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getGames.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/hvw/games/:id',
+    app.get('/api.willsbach-handball.de/hvw/games/:id',
         function(request: any, response: any, next: any) {
             const args = {
                 ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
@@ -257,7 +250,7 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getGame.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/hvw/ligue',
+    app.get('/api.willsbach-handball.de/hvw/ligue',
         function(request: any, response: any, next: any) {
             const args = {
                 id: { "in": "query", "name": "id", "required": true, "dataType": "string" },

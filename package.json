@@ -1,10 +1,10 @@
 {
   "name": "wh_middleware",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.5",
+  "description": "TSV Willsbach Handball API's",
   "main": "server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run generate && tsc",
     "dev": "nodemon ./lib/server.ts",
     "start": "nodemon ./dist/server.js",
     "prod": "npm run build && npm run start",
@@ -14,9 +14,9 @@
     "type": "git",
     "url": "git+https://miggi12@bitbucket.org/tsvwillsbachhandball/middleware.git"
   },
-  "keywords": [],
+  "keywords": ["TSV", "TSV Willsbach", "Willsbach", "Willsbach Handball"],
   "author": "Miguel Gebhardt <miguel@willsbach-handball.de>",
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://bitbucket.org/tsvwillsbachhandball/middleware",
   "dependencies": {
     "@types/express": "^4.17.0",

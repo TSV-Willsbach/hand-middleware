@@ -33,7 +33,7 @@
 				"team": {
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/Team"
+						"type": "string"
 					},
 					"x-nullable": true
 				}
@@ -45,35 +45,14 @@
 				"number"
 			],
 			"type": "object"
-		},
-		"Team": {
-			"properties": {
-				"_id": {
-					"type": "string"
-				},
-				"name": {
-					"type": "string"
-				},
-				"players": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/Player"
-					}
-				}
-			},
-			"required": [
-				"_id",
-				"name",
-				"players"
-			],
-			"type": "object"
 		}
 	},
 	"info": {
 		"title": "wh_middleware",
-		"version": "1.0.0",
+		"version": "0.0.5",
+		"description": "TSV Willsbach Handball API's",
 		"license": {
-			"name": "ISC"
+			"name": "MIT"
 		}
 	},
 	"paths": {
@@ -437,5 +416,19 @@
 		"application/json"
 	],
 	"swagger": "2.0",
-	"securityDefinitions": {}
+	"securityDefinitions": {},
+	"tags": [
+		{
+			"name": "HVW",
+			"description": "Services that call data from Handball4all",
+			"externalDocs": {
+				"description": "More about Handball4all",
+				"url": "https://www.handball4all.de"
+			}
+		},
+		{
+			"name": "Wordpress",
+			"description": "All wordpress services"
+		}
+	]
 }
