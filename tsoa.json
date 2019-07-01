@@ -1,0 +1,24 @@
+{
+    "swagger": {
+        "outputDirectory": ".",
+        "entryFile": "./lib/app.ts",
+        "tags": [{
+                "name": "HVW",
+                "description": "Services that call data from Handball4all",
+                "externalDocs": {
+                    "description": "More about Handball4all",
+                    "url": "https://www.handball4all.de"
+                }
+            },
+            {
+                "name": "Wordpress",
+                "description": "All wordpress services"
+            }
+        ]
+    },
+    "routes": {
+        "basePath": "/",
+        "entryFile": "./lib/app.ts",
+        "routesDir": "./lib/routes"
+    }
+}
