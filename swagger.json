@@ -45,6 +45,110 @@
 				"number"
 			],
 			"type": "object"
+		},
+		"Tag": {
+			"properties": {
+				"id": {
+					"type": "number",
+					"format": "double"
+				},
+				"name": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id"
+			],
+			"type": "object"
+		},
+		"Picture": {
+			"properties": {
+				"url": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"height": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"mime_type": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"url"
+			],
+			"type": "object"
+		},
+		"Post": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				},
+				"excerpt": {
+					"type": "string"
+				},
+				"content": {
+					"type": "string"
+				},
+				"author": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"categories": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Tag"
+					},
+					"x-nullable": true
+				},
+				"tags": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Tag"
+					},
+					"x-nullable": true
+				},
+				"isNew": {
+					"type": "boolean",
+					"x-nullable": true
+				},
+				"modified": {
+					"type": "string",
+					"format": "date-time",
+					"x-nullable": true
+				},
+				"sticky": {
+					"type": "boolean",
+					"x-nullable": true
+				},
+				"picture": {
+					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"title",
+				"excerpt",
+				"content",
+				"author",
+				"date"
+			],
+			"type": "object"
 		}
 	},
 	"info": {
@@ -194,7 +298,10 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Post"
+							}
 						}
 					}
 				},
@@ -236,7 +343,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Post"
 						}
 					}
 				},
@@ -264,7 +371,10 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Post"
+							}
 						}
 					}
 				},

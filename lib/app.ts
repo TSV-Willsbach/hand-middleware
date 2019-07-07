@@ -1,4 +1,6 @@
 import * as express from "express";
+import * as cors from 'cors';
+import * as compression from 'compression';
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 import * as swaggerUi from 'swagger-ui-express';
@@ -26,10 +28,15 @@ class App {
     }
 
     private config(): void {
+        // cross-orign
+        this.app.use(cors());
+        // compression
+        this.app.use(compression())
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
+
     }
 
     private mongoSetup(): void {

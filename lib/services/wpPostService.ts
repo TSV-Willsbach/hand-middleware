@@ -1,5 +1,5 @@
-
 import { proxyService } from "./proxyService";
+import { Picture, Post, Tag } from "../models/wordpressModel";
 
 export class wpPostService extends proxyService {
 
@@ -26,12 +26,26 @@ export class wpPostService extends proxyService {
         }
 
 
-        return this.request.get(this.options);
+        return this.request
+            .get(this.options)
+            .then(x => {
+                let posts = new Array<Post>();
+                x.forEach(element => {
+                    let post: Post = this.mapPost(element);
+                    posts.push(post);
+                });
+                return posts;
+            });
     }
 
     public getPost(id) {
         this.options.uri = this.uri + 'posts/' + id + `?_embed`;
-        return this.request.get(this.options);
+        return this.request
+            .get(this.options)
+            .then(element => {
+                let post: Post = this.mapPost(element);
+                return post;
+            });
     }
 
     public getReports(page) {
@@ -42,5 +56,78 @@ export class wpPostService extends proxyService {
         this.options.uri = this.uri + 'media?_embed&search=teams';
         console.log(this.options.uri);
         return this.request.get(this.options);
+    }
+
+    private mapPost(element: any) {
+        let post: Post;
+        let categories = new Array<Tag>();
+        let tags = new Array<Tag>();
+        element.content.rendered = this.responsiveImgs(element.content.rendered);
+        element.picture = this.mapPicture(element._embedded['wp:featuredmedia'][0].media_details.sizes);
+        element._embedded.term = element._embedded['wp:term'];
+        element.author = element._embedded['author'][0].name;
+        element._embedded.term[0].forEach(el => {
+            categories.push({
+                id: el.id,
+                name: el.name
+            });
+        });
+        element._embedded.term[1].forEach(el => {
+            tags.push({
+                id: el.id,
+                name: el.name
+            });
+        });
+        post = {
+            id: element.id,
+            title: element.title.rendered,
+            date: element.date_gmt,
+            modified: element.modified_gmt,
+            author: element.author,
+            sticky: element.sticky,
+            isNew: this.isPostNew(element.date_gmt),
+            picture: element.picture,
+            categories: categories,
+            tags: tags,
+            excerpt: element.excerpt.rendered,
+            content: element.content.rendered
+        };
+        return post;
+    }
+
+    private mapPicture(element): Picture {
+        let pic: Picture;
+        let size;
+
+        if (element.medium_large != undefined) {
+            size = element.medium_large;
+        } else {
+            element.thumbnail;
+            console.log(element.thumbnail);
+        }
+        pic = {
+            url: size.source_url,
+            width: size.width,
+            height: size.height,
+            mime_type: size.mime_type
+        }
+        return pic;
+    }
+
+    private responsiveImgs(content: string): string {
+        // Make all images responsive
+        return content.replace(new RegExp('<img', 'g'), '<img class="img-fluid"');
+    }
+
+    private isPostNew(date: Date): boolean {
+        const today = new Date();
+        const last3Days = new Date();
+        last3Days.setDate(today.getDate() - 4);
+        const testDate = new Date(date);
+
+        if (today >= testDate && last3Days <= testDate) {
+            return true;
+        }
+        return false;
     }
 }

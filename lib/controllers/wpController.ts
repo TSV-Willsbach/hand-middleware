@@ -1,3 +1,4 @@
+import { Post } from './../models/wordpressModel';
 import { Controller, Route, Get, Tags, Query, Path } from 'tsoa';
 import { wpPostService } from '../services/wpPostService';
 
@@ -9,17 +10,17 @@ export class WpController extends Controller {
 
 
     @Get('/posts/')
-    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() sticky?: boolean) {
+    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() sticky?: boolean): Promise<Post[]> {
         return await new wpPostService().getPosts(page, category, sticky);
     }
 
     @Get('/posts/{id}')
-    public async getPost(@Path('id') ID: string) {
+    public async getPost(@Path('id') ID: string): Promise<Post> {
         return await new wpPostService().getPost(ID);
     }
 
     @Get('/reports')
-    public async getReports(@Query() page?: number) {
+    public async getReports(@Query() page?: number): Promise<Post[]> {
         return await new wpPostService().getReports(page);
     }
 

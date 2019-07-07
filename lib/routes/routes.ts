@@ -18,6 +18,36 @@ const models: TsoaRoute.Models = {
             "team": { "dataType": "array", "array": { "dataType": "string" } },
         },
     },
+    "Tag": {
+        "properties": {
+            "id": { "dataType": "double", "required": true },
+            "name": { "dataType": "string" },
+        },
+    },
+    "Picture": {
+        "properties": {
+            "url": { "dataType": "string", "required": true },
+            "width": { "dataType": "double" },
+            "height": { "dataType": "double" },
+            "mime_type": { "dataType": "string" },
+        },
+    },
+    "Post": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "title": { "dataType": "string", "required": true },
+            "excerpt": { "dataType": "string", "required": true },
+            "content": { "dataType": "string", "required": true },
+            "author": { "dataType": "string", "required": true },
+            "date": { "dataType": "datetime", "required": true },
+            "categories": { "dataType": "array", "array": { "ref": "Tag" } },
+            "tags": { "dataType": "array", "array": { "ref": "Tag" } },
+            "isNew": { "dataType": "boolean" },
+            "modified": { "dataType": "datetime" },
+            "sticky": { "dataType": "boolean" },
+            "picture": { "ref": "Picture" },
+        },
+    },
 };
 const validationService = new ValidationService(models);
 
