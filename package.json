@@ -1,6 +1,6 @@
 {
   "name": "wh_middleware",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "TSV Willsbach Handball API's",
   "main": "server.js",
   "scripts": {
