@@ -1,10 +1,7 @@
-import { Media } from './../models/wordpressModel';
-import { proxyService } from "./proxyService";
-import { Picture, Post, Tag } from "../models/wordpressModel";
+import { wordpressService } from '../wordpressService';
+import { Post, Tag, Picture } from '../../models/wordpressModel';
 
-export class wpPostService extends proxyService {
-
-    private uri = 'https://wp.willsbach-handball.de/wp-json/wp/v2/';
+export class wpPostService extends wordpressService {
 
     constructor() {
         super();
@@ -53,72 +50,6 @@ export class wpPostService extends proxyService {
         return this.getPosts(page, 6);
     }
 
-    public getMedia(archived: boolean, search: string) {
-        this.options.uri = this.uri + 'media?_embed';
-
-        if (search != undefined) {
-            this.options.uri = this.options.uri + `&search=${search}`
-        }
-
-        return this.request
-            .get(this.options)
-            .then(response => {
-                let media = new Array<Media>();
-                response.forEach(element => {
-                    let singleMedia = this.mapMedia(element);
-                    if (singleMedia.archived === archived || archived === undefined) {
-                        media.push(singleMedia);
-                    }
-
-                });
-
-                return media;
-            });
-    }
-
-    public getSingleMedia(id) {
-        this.options.uri = this.uri + `media/${id}?_embed`;
-        return this.request
-            .get(this.options)
-            .then(response => {
-                let media: Media = this.mapMedia(response);
-                return media;
-            });
-    }
-
-    public getTeamPhotos(archived: boolean) {
-        return this.getMedia(archived, 'teams');
-    }
-
-    public getSponsors(archived: boolean) {
-        return this.getMedia(archived, 'sponsors');
-    }
-
-    private mapMedia(element: any) {
-        let media: Media;
-        media = {
-            id: element.id,
-            title: element.title.rendered,
-            alt_text: element.alt_text,
-            author: element._embedded['author'][0].name,
-            date: element.date_gmt,
-            modified: element.modified_gmt,
-            url: element.source_url,
-            height: element.media_details.height,
-            width: element.media_details.width,
-            caption: element.caption.rendered,
-            mime_type: element.mime_type,
-            archived: element.acf.archive,
-            team: element.acf.team,
-            sponsor: {
-                url: element.acf.sponsorUrl,
-                type: element.acf.sponsorType
-            },
-            description: element.description.rendered,
-        };
-        return media;
-    }
-
     private mapPost(element: any) {
         let post: Post;
         let categories = new Array<Tag>();
@@ -126,7 +57,7 @@ export class wpPostService extends proxyService {
         element.content.rendered = this.responsiveImgs(element.content.rendered);
         element.picture = this.mapPicture(element._embedded['wp:featuredmedia'][0].media_details.sizes);
         element._embedded.term = element._embedded['wp:term'];
-        element.author = element._embedded['author'][0].name;
+        element.author = this.getAuthor(element);
         element._embedded.term[0].forEach(el => {
             categories.push({
                 id: el.id,
@@ -173,11 +104,6 @@ export class wpPostService extends proxyService {
             mime_type: size.mime_type
         }
         return pic;
-    }
-
-    private responsiveImgs(content: string): string {
-        // Make all images responsive
-        return content.replace(new RegExp('<img', 'g'), '<img class="img-fluid"');
     }
 
     private isPostNew(date: Date): boolean {
