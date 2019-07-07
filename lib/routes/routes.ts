@@ -74,6 +74,79 @@ const models: TsoaRoute.Models = {
             "sponsor": { "ref": "Sponsor" },
         },
     },
+    "Score": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "rank": { "dataType": "double", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "live": { "dataType": "boolean", "required": true },
+            "games": { "dataType": "any", "required": true },
+            "goals": { "dataType": "any", "required": true },
+            "points": { "dataType": "any", "required": true },
+        },
+    },
+    "Gymnasium": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "number": { "dataType": "string", "required": true },
+            "name": { "dataType": "string" },
+            "street": { "dataType": "string" },
+            "postal": { "dataType": "string" },
+            "city": { "dataType": "string" },
+        },
+    },
+    "Teams": {
+        "properties": {
+            "home": { "dataType": "double", "required": true },
+            "guest": { "dataType": "double", "required": true },
+        },
+    },
+    "Goals": {
+        "properties": {
+            "end": { "ref": "Teams", "required": true },
+            "halfTime": { "ref": "Teams", "required": true },
+        },
+    },
+    "Game": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "live": { "dataType": "boolean", "required": true },
+            "date": { "dataType": "datetime", "required": true },
+            "gymnasium": { "ref": "Gymnasium", "required": true },
+            "team": { "dataType": "any", "required": true },
+            "goals": { "ref": "Goals", "required": true },
+            "points": { "ref": "Teams", "required": true },
+            "referees": { "dataType": "string", "required": true },
+            "comment": { "dataType": "string" },
+            "sortText": { "dataType": "string" },
+            "token": { "dataType": "string" },
+            "appId": { "dataType": "string" },
+        },
+    },
+    "Ligue": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "shortName": { "dataType": "string", "required": true },
+            "comment": { "dataType": "string" },
+            "headline1": { "dataType": "string" },
+            "headline2": { "dataType": "string" },
+            "actualized": { "dataType": "string" },
+            "scores": { "dataType": "array", "array": { "ref": "Score" } },
+            "games": { "dataType": "array", "array": { "ref": "Game" }, "required": true },
+        },
+    },
+    "Club": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "shortName": { "dataType": "string", "required": true },
+            "headline1": { "dataType": "string" },
+            "headline2": { "dataType": "string" },
+            "actualized": { "dataType": "string" },
+            "ligues": { "dataType": "array", "array": { "ref": "Ligue" } },
+        },
+    },
 };
 const validationService = new ValidationService(models);
 
@@ -346,10 +419,47 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
+    app.get('/hvw/club',
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new hvwController();
+
+
+            const promise = controller.getClubs.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/hvw/club/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new hvwController();
+
+
+            const promise = controller.getClub.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
     app.get('/hvw/games',
         function(request: any, response: any, next: any) {
             const args = {
-                periode: { "in": "query", "name": "periode", "dataType": "double" },
+                id: { "in": "query", "name": "id", "required": true, "dataType": "string" },
             };
 
             let validatedArgs: any[] = [];
@@ -363,25 +473,6 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getGames.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.get('/hvw/games/:id',
-        function(request: any, response: any, next: any) {
-            const args = {
-                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new hvwController();
-
-
-            const promise = controller.getGame.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/hvw/ligue',

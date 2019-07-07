@@ -240,6 +240,248 @@
 				"description"
 			],
 			"type": "object"
+		},
+		"Score": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"rank": {
+					"type": "number",
+					"format": "double"
+				},
+				"name": {
+					"type": "string"
+				},
+				"live": {
+					"type": "boolean"
+				},
+				"games": {
+					"type": "object"
+				},
+				"goals": {
+					"type": "object"
+				},
+				"points": {
+					"type": "object"
+				}
+			},
+			"required": [
+				"id",
+				"rank",
+				"name",
+				"live",
+				"games",
+				"goals",
+				"points"
+			],
+			"type": "object"
+		},
+		"Gymnasium": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"number": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"street": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"postal": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"city": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"number"
+			],
+			"type": "object"
+		},
+		"Teams": {
+			"properties": {
+				"home": {
+					"type": "number",
+					"format": "double"
+				},
+				"guest": {
+					"type": "number",
+					"format": "double"
+				}
+			},
+			"required": [
+				"home",
+				"guest"
+			],
+			"type": "object"
+		},
+		"Goals": {
+			"properties": {
+				"end": {
+					"$ref": "#/definitions/Teams"
+				},
+				"halfTime": {
+					"$ref": "#/definitions/Teams"
+				}
+			},
+			"required": [
+				"end",
+				"halfTime"
+			],
+			"type": "object"
+		},
+		"Game": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"live": {
+					"type": "boolean"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"gymnasium": {
+					"$ref": "#/definitions/Gymnasium"
+				},
+				"team": {
+					"type": "object"
+				},
+				"goals": {
+					"$ref": "#/definitions/Goals"
+				},
+				"points": {
+					"$ref": "#/definitions/Teams"
+				},
+				"referees": {
+					"type": "string"
+				},
+				"comment": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"sortText": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"token": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"appId": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"live",
+				"date",
+				"gymnasium",
+				"team",
+				"goals",
+				"points",
+				"referees"
+			],
+			"type": "object"
+		},
+		"Ligue": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"shortName": {
+					"type": "string"
+				},
+				"comment": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"headline1": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"headline2": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"actualized": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"scores": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Score"
+					},
+					"x-nullable": true
+				},
+				"games": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Game"
+					}
+				}
+			},
+			"required": [
+				"id",
+				"name",
+				"shortName",
+				"games"
+			],
+			"type": "object"
+		},
+		"Club": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"shortName": {
+					"type": "string"
+				},
+				"headline1": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"headline2": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"actualized": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"ligues": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Ligue"
+					},
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"name",
+				"shortName"
+			],
+			"type": "object"
 		}
 	},
 	"info": {
@@ -660,9 +902,9 @@
 				]
 			}
 		},
-		"/hvw/games": {
+		"/hvw/club": {
 			"get": {
-				"operationId": "GetGames",
+				"operationId": "GetClubs",
 				"produces": [
 					"application/json"
 				],
@@ -670,7 +912,10 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Club"
+							}
 						}
 					}
 				},
@@ -678,20 +923,12 @@
 					"HVW"
 				],
 				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "periode",
-						"required": false,
-						"format": "double",
-						"type": "number"
-					}
-				]
+				"parameters": []
 			}
 		},
-		"/hvw/games/{id}": {
+		"/hvw/club/{id}": {
 			"get": {
-				"operationId": "GetGame",
+				"operationId": "GetClub",
 				"produces": [
 					"application/json"
 				],
@@ -699,7 +936,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Club"
 						}
 					}
 				},
@@ -717,6 +954,40 @@
 				]
 			}
 		},
+		"/hvw/games": {
+			"get": {
+				"operationId": "GetGames",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Game"
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
 		"/hvw/ligue": {
 			"get": {
 				"operationId": "GetLigue",
@@ -727,7 +998,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Ligue"
 						}
 					}
 				},
