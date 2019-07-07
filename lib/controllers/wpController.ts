@@ -1,4 +1,4 @@
-import { Post } from './../models/wordpressModel';
+import { Post, Media } from './../models/wordpressModel';
 import { Controller, Route, Get, Tags, Query, Path } from 'tsoa';
 import { wpPostService } from '../services/wpPostService';
 
@@ -24,8 +24,25 @@ export class WpController extends Controller {
         return await new wpPostService().getReports(page);
     }
 
+    @Get('/media/all')
+    public async getMedia(@Query() archived?: boolean, @Query() search?: string): Promise<Media[]> {
+        return await new wpPostService().getMedia(archived, search);
+    }
+
+    @Get('/media/all/{id}')
+    public async getSingleMedia(@Path('id') id: string): Promise<Media> {
+        return await new wpPostService().getSingleMedia(id);
+    }
+
     @Get('/media/teams')
-    public async getTeamPhotos(@Query() archived?: boolean) {
+    public async getTeamPhotos(@Query() archived?: boolean): Promise<Media[]> {
         return await new wpPostService().getTeamPhotos(archived);
     }
+
+    @Get('/media/sponsors')
+    public async getSponsors(@Query() archived?: boolean): Promise<Media[]> {
+        return await new wpPostService().getSponsors(archived);
+    }
+
+
 } 

@@ -92,7 +92,19 @@
 				"id": {
 					"type": "string"
 				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"modified": {
+					"type": "string",
+					"format": "date-time",
+					"x-nullable": true
+				},
 				"title": {
+					"type": "string"
+				},
+				"author": {
 					"type": "string"
 				},
 				"excerpt": {
@@ -100,13 +112,6 @@
 				},
 				"content": {
 					"type": "string"
-				},
-				"author": {
-					"type": "string"
-				},
-				"date": {
-					"type": "string",
-					"format": "date-time"
 				},
 				"categories": {
 					"type": "array",
@@ -126,11 +131,6 @@
 					"type": "boolean",
 					"x-nullable": true
 				},
-				"modified": {
-					"type": "string",
-					"format": "date-time",
-					"x-nullable": true
-				},
 				"sticky": {
 					"type": "boolean",
 					"x-nullable": true
@@ -142,11 +142,102 @@
 			},
 			"required": [
 				"id",
+				"date",
 				"title",
-				"excerpt",
-				"content",
 				"author",
-				"date"
+				"excerpt",
+				"content"
+			],
+			"type": "object"
+		},
+		"Sponsor": {
+			"properties": {
+				"url": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"type": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"type": "object"
+		},
+		"Media": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"modified": {
+					"type": "string",
+					"format": "date-time",
+					"x-nullable": true
+				},
+				"title": {
+					"type": "string"
+				},
+				"author": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"height": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"mime_type": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"archived": {
+					"type": "boolean"
+				},
+				"alt_text": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"sizes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Picture"
+					},
+					"x-nullable": true
+				},
+				"caption": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"team": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"sponsor": {
+					"$ref": "#/definitions/Sponsor",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"date",
+				"title",
+				"author",
+				"url",
+				"archived",
+				"alt_text",
+				"description"
 			],
 			"type": "object"
 		}
@@ -393,6 +484,71 @@
 				]
 			}
 		},
+		"/wp/media/all": {
+			"get": {
+				"operationId": "GetMedia",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Media"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "archived",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/media/all/{id}": {
+			"get": {
+				"operationId": "GetSingleMedia",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Media"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
 		"/wp/media/teams": {
 			"get": {
 				"operationId": "GetTeamPhotos",
@@ -403,7 +559,41 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Media"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "archived",
+						"required": false,
+						"type": "boolean"
+					}
+				]
+			}
+		},
+		"/wp/media/sponsors": {
+			"get": {
+				"operationId": "GetSponsors",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Media"
+							}
 						}
 					}
 				},

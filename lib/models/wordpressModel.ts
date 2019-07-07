@@ -1,3 +1,11 @@
+interface wordPress {
+    id: string,
+    date: Date,
+    modified?: Date,
+    title: string,
+    author: string
+}
+
 export interface Picture {
     url: string,
     width?: number,
@@ -9,17 +17,28 @@ export interface Tag {
     name?: string
 }
 
-export interface Post {
-    id: string,
-    title: string,
+export interface Post extends wordPress {
     excerpt: string,
     content: string,
-    author: string,
-    date: Date,
+
     categories?: Tag[],
     tags?: Tag[],
     isNew?: boolean,
-    modified?: Date,
     sticky?: boolean,
     picture?: Picture
+}
+
+interface Sponsor {
+    url?: string,
+    type?: string
+}
+
+export interface Media extends wordPress, Picture {
+    archived: boolean,
+    alt_text: string,
+    description: string,
+    sizes?: Picture[],
+    caption?: string,
+    team?: string,
+    sponsor?: Sponsor
 }

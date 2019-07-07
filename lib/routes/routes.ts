@@ -35,17 +35,43 @@ const models: TsoaRoute.Models = {
     "Post": {
         "properties": {
             "id": { "dataType": "string", "required": true },
+            "date": { "dataType": "datetime", "required": true },
+            "modified": { "dataType": "datetime" },
             "title": { "dataType": "string", "required": true },
+            "author": { "dataType": "string", "required": true },
             "excerpt": { "dataType": "string", "required": true },
             "content": { "dataType": "string", "required": true },
-            "author": { "dataType": "string", "required": true },
-            "date": { "dataType": "datetime", "required": true },
             "categories": { "dataType": "array", "array": { "ref": "Tag" } },
             "tags": { "dataType": "array", "array": { "ref": "Tag" } },
             "isNew": { "dataType": "boolean" },
-            "modified": { "dataType": "datetime" },
             "sticky": { "dataType": "boolean" },
             "picture": { "ref": "Picture" },
+        },
+    },
+    "Sponsor": {
+        "properties": {
+            "url": { "dataType": "string" },
+            "type": { "dataType": "string" },
+        },
+    },
+    "Media": {
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "date": { "dataType": "datetime", "required": true },
+            "modified": { "dataType": "datetime" },
+            "title": { "dataType": "string", "required": true },
+            "author": { "dataType": "string", "required": true },
+            "url": { "dataType": "string", "required": true },
+            "width": { "dataType": "double" },
+            "height": { "dataType": "double" },
+            "mime_type": { "dataType": "string" },
+            "archived": { "dataType": "boolean", "required": true },
+            "alt_text": { "dataType": "string", "required": true },
+            "description": { "dataType": "string", "required": true },
+            "sizes": { "dataType": "array", "array": { "ref": "Picture" } },
+            "caption": { "dataType": "string" },
+            "team": { "dataType": "string" },
+            "sponsor": { "ref": "Sponsor" },
         },
     },
 };
@@ -206,6 +232,45 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getReports.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
+    app.get('/wp/media/all',
+        function(request: any, response: any, next: any) {
+            const args = {
+                archived: { "in": "query", "name": "archived", "dataType": "boolean" },
+                search: { "in": "query", "name": "search", "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getMedia.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/wp/media/all/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getSingleMedia.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
     app.get('/wp/media/teams',
         function(request: any, response: any, next: any) {
             const args = {
@@ -223,6 +288,25 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getTeamPhotos.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/wp/media/sponsors',
+        function(request: any, response: any, next: any) {
+            const args = {
+                archived: { "in": "query", "name": "archived", "dataType": "boolean" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new WpController();
+
+
+            const promise = controller.getSponsors.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/teams',

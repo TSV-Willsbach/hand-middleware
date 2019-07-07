@@ -1,3 +1,4 @@
+import { Media } from './../models/wordpressModel';
 import { proxyService } from "./proxyService";
 import { Picture, Post, Tag } from "../models/wordpressModel";
 
@@ -31,7 +32,7 @@ export class wpPostService extends proxyService {
             .then(x => {
                 let posts = new Array<Post>();
                 x.forEach(element => {
-                    let post: Post = this.mapPost(element);
+                    let post = this.mapPost(element);
                     posts.push(post);
                 });
                 return posts;
@@ -52,10 +53,70 @@ export class wpPostService extends proxyService {
         return this.getPosts(page, 6);
     }
 
+    public getMedia(archived: boolean, search: string) {
+        this.options.uri = this.uri + 'media?_embed';
+
+        if (search != undefined) {
+            this.options.uri = this.options.uri + `&search=${search}`
+        }
+
+        return this.request
+            .get(this.options)
+            .then(response => {
+                let media = new Array<Media>();
+                response.forEach(element => {
+                    let singleMedia = this.mapMedia(element);
+                    if (singleMedia.archived === archived || archived === undefined) {
+                        media.push(singleMedia);
+                    }
+
+                });
+
+                return media;
+            });
+    }
+
+    public getSingleMedia(id) {
+        this.options.uri = this.uri + `media/${id}?_embed`;
+        return this.request
+            .get(this.options)
+            .then(response => {
+                let media: Media = this.mapMedia(response);
+                return media;
+            });
+    }
+
     public getTeamPhotos(archived: boolean) {
-        this.options.uri = this.uri + 'media?_embed&search=teams';
-        console.log(this.options.uri);
-        return this.request.get(this.options);
+        return this.getMedia(archived, 'teams');
+    }
+
+    public getSponsors(archived: boolean) {
+        return this.getMedia(archived, 'sponsors');
+    }
+
+    private mapMedia(element: any) {
+        let media: Media;
+        media = {
+            id: element.id,
+            title: element.title.rendered,
+            alt_text: element.alt_text,
+            author: element._embedded['author'][0].name,
+            date: element.date_gmt,
+            modified: element.modified_gmt,
+            url: element.source_url,
+            height: element.media_details.height,
+            width: element.media_details.width,
+            caption: element.caption.rendered,
+            mime_type: element.mime_type,
+            archived: element.acf.archive,
+            team: element.acf.team,
+            sponsor: {
+                url: element.acf.sponsorUrl,
+                type: element.acf.sponsorType
+            },
+            description: element.description.rendered,
+        };
+        return media;
     }
 
     private mapPost(element: any) {
