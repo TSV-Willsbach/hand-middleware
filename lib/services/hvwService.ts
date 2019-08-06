@@ -25,7 +25,7 @@ export class hvwService extends proxyService {
 
     public getClub(period) {
         if (period === null) {
-            period = '68';
+            period = '83';
         }
         this.options.uri = this.uri + '?c=60&cmd=pcu&og=3' + `&p=${period}`;
 
