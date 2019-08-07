@@ -1,4 +1,3 @@
-import { Picture, Post, Tag, Media } from "../models/wordpressModel";
 import { proxyService } from "./proxyService";
 
 export class wordpressService extends proxyService {

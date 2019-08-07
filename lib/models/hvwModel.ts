@@ -8,7 +8,7 @@ interface Gymnasium {
     city?: string,
 }
 
-interface Goals {
+interface gameGoals {
     end: Teams,
     halfTime: Teams
 }
@@ -16,6 +16,43 @@ interface Goals {
 interface Teams {
     home: number,
     guest: number
+}
+
+interface StatisticGameValues {
+    amount: number,
+    games: number,
+    percentage?: number
+}
+interface StatisticGoalValues {
+    goals: number,
+    average?: number
+}
+
+export interface Statistic {
+    gameWon: {
+        home: StatisticGameValues,
+        away: StatisticGameValues
+    },
+    goalsShot: {
+        home: StatisticGoalValues,
+        away: StatisticGoalValues
+    },
+    goalsGot: {
+        home: StatisticGoalValues,
+        away: StatisticGoalValues
+    },
+    highestWin: {
+        home: string,
+        away: string
+    },
+    highestLose: {
+        home: string,
+        away: string
+    }
+}
+export interface Goals {
+    shot: number,
+    got: number
 }
 
 export interface Score {
@@ -29,14 +66,12 @@ export interface Score {
         equal: number,
         lost: number
     },
-    goals: {
-        shot: number,
-        got: number
-    },
+    goals: Goals,
     points: {
         plus: number,
         minus: number
-    }
+    },
+    statistics?: Statistic
 
 }
 
@@ -49,7 +84,7 @@ export interface Game {
         home: string,
         guest: string
     },
-    goals: Goals,
+    goals: gameGoals,
     points: Teams,
     referees: string,
     comment?: string,
