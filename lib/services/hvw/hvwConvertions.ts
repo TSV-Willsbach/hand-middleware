@@ -59,7 +59,7 @@ export class hvwConvertions {
                 headline1: ligueData.head.headline1,
                 headline2: ligueData.head.headline2,
                 actualized: ligueData.head.actualized,
-                comment: ligueData.content.scoreComments,
+                comment: ligueData.content.scoreComments[0],
                 scores: scores,
                 games: games
 
