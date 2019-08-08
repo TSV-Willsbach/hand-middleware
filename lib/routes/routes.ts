@@ -48,6 +48,13 @@ const models: TsoaRoute.Models = {
             "picture": { "ref": "Picture" },
         },
     },
+    "Posts": {
+        "properties": {
+            "maxPages": { "dataType": "double", "required": true },
+            "total": { "dataType": "double", "required": true },
+            "posts": { "dataType": "array", "array": { "ref": "Post" }, "required": true },
+        },
+    },
     "Sponsor": {
         "properties": {
             "url": { "dataType": "string" },
@@ -365,6 +372,7 @@ export function RegisterRoutes(app: express.Express) {
         function(request: any, response: any, next: any) {
             const args = {
                 archived: { "in": "query", "name": "archived", "dataType": "boolean" },
+                teamId: { "in": "query", "name": "teamId", "dataType": "string" },
             };
 
             let validatedArgs: any[] = [];

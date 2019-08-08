@@ -33,8 +33,8 @@ export class WpController extends Controller {
     }
 
     @Get('/media/teams')
-    public async getTeamPhotos(@Query() archived?: boolean): Promise<Media[]> {
-        return await new wpMediaService().getTeamPhotos(archived);
+    public async getTeamPhotos(@Query() archived?: boolean, @Query() teamId?: string): Promise<Media[]> {
+        return await new wpMediaService().getTeamPhotos(archived, teamId);
     }
 
     @Get('/media/sponsors')

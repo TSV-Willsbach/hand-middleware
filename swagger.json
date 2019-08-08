@@ -150,6 +150,30 @@
 			],
 			"type": "object"
 		},
+		"Posts": {
+			"properties": {
+				"maxPages": {
+					"type": "number",
+					"format": "double"
+				},
+				"total": {
+					"type": "number",
+					"format": "double"
+				},
+				"posts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Post"
+					}
+				}
+			},
+			"required": [
+				"maxPages",
+				"total",
+				"posts"
+			],
+			"type": "object"
+		},
 		"Sponsor": {
 			"properties": {
 				"url": {
@@ -539,7 +563,7 @@
 	},
 	"info": {
 		"title": "wh_middleware",
-		"version": "0.0.8",
+		"version": "0.0.9",
 		"description": "TSV Willsbach Handball API's",
 		"license": {
 			"name": "MIT"
@@ -684,10 +708,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/Post"
-							}
+							"$ref": "#/definitions/Posts"
 						}
 					}
 				},
@@ -757,10 +778,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/Post"
-							}
+							"$ref": "#/definitions/Posts"
 						}
 					}
 				},
@@ -871,6 +889,12 @@
 						"name": "archived",
 						"required": false,
 						"type": "boolean"
+					},
+					{
+						"in": "query",
+						"name": "teamId",
+						"required": false,
+						"type": "string"
 					}
 				]
 			}
