@@ -9,7 +9,7 @@ export class wpPostService extends wordpressService {
     }
 
     public getPosts(page?: number, category?: number, sticky?: boolean) {
-        this.options.uri = this.uri + 'posts/' + `?_embed`;
+        this.options.uri = this.uri + 'posts' + `?_embed`;
 
         if (page != null) {
             this.options.uri = this.options.uri + `&page=${page}`;
