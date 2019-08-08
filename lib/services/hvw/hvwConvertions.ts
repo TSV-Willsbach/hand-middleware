@@ -193,22 +193,26 @@ export class hvwConvertions {
         let homeOpponent = {
             lose: {
                 name: '',
-                difference: 0
+                difference: 0,
+                result: ''
             },
             win: {
                 name: '',
-                difference: 0
+                difference: 0,
+                result: ''
             }
         }
 
         let awayOpponent = {
             lose: {
                 name: '',
-                difference: 0
+                difference: 0,
+                result: ''
             },
             win: {
                 name: '',
-                difference: 0
+                difference: 0,
+                result: ''
             }
         }
 
@@ -221,12 +225,14 @@ export class hvwConvertions {
             if (element.points.home === 2 && difference > homeOpponent.win.difference) {
                 homeOpponent.win = {
                     difference: difference,
-                    name: element.team.guest
+                    name: element.team.guest,
+                    result: `${element.goals.end.home} : ${element.goals.end.guest}`
                 };
             } else if (element.points.guest === 2 && difference < homeOpponent.lose.difference) {
                 homeOpponent.lose = {
                     difference: difference,
-                    name: element.team.guest
+                    name: element.team.guest,
+                    result: `${element.goals.end.home} : ${element.goals.end.guest}`
                 };
             }
         });
@@ -240,12 +246,14 @@ export class hvwConvertions {
             if (element.points.home === 2 && difference > awayOpponent.lose.difference) {
                 awayOpponent.lose = {
                     difference: difference,
-                    name: element.team.home
+                    name: element.team.home,
+                    result: `${element.goals.end.home} : ${element.goals.end.guest}`
                 };
             } else if (element.points.guest === 2 && difference < awayOpponent.win.difference) {
                 awayOpponent.win = {
                     difference: difference,
-                    name: element.team.home
+                    name: element.team.home,
+                    result: `${element.goals.end.home} : ${element.goals.end.guest}`
                 };
             }
         });
@@ -282,8 +290,8 @@ export class hvwConvertions {
                 away: awayOpponent.win.name
             },
             highestLose: {
-                home: homeOpponent.lose.name,
-                away: awayOpponent.lose.name
+                home: { name: homeOpponent.lose.name, result: '' },
+                away: { name: awayOpponent.lose.name, result: '' }
             }
         }
 

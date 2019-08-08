@@ -46,8 +46,14 @@ export interface Statistic {
         away: string
     },
     highestLose: {
-        home: string,
-        away: string
+        home: {
+            name: string,
+            result: string
+        },
+        away: {
+            name: string,
+            result: string
+        }
     }
 }
 export interface Goals {
