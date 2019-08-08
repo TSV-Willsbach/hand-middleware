@@ -98,12 +98,13 @@ export class wpPostService extends wordpressService {
         let pic: Picture;
         let size;
 
+
         if (element.medium_large != undefined) {
             size = element.medium_large;
         } else {
-            element.thumbnail;
-            console.log(element.thumbnail);
+            size = element.thumbnail;
         }
+
         pic = {
             url: size.source_url,
             width: size.width,
