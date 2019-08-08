@@ -1,5 +1,5 @@
 import { wpMediaService } from './../services/wordPress/wpMediaService';
-import { Post, Media } from './../models/wordpressModel';
+import { Post, Media, Posts } from './../models/wordpressModel';
 import { Controller, Route, Get, Tags, Query, Path } from 'tsoa';
 import { wpPostService } from '../services/wordPress/wpPostService';
 
@@ -8,7 +8,7 @@ import { wpPostService } from '../services/wordPress/wpPostService';
 export class WpController extends Controller {
 
     @Get('/posts/')
-    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() sticky?: boolean): Promise<Post[]> {
+    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() sticky?: boolean): Promise<Posts> {
         return await new wpPostService().getPosts(page, category, sticky);
     }
 
@@ -18,7 +18,7 @@ export class WpController extends Controller {
     }
 
     @Get('/reports')
-    public async getReports(@Query() page?: number): Promise<Post[]> {
+    public async getReports(@Query() page?: number): Promise<Posts> {
         return await new wpPostService().getReports(page);
     }
 

@@ -1,5 +1,6 @@
 import { wordpressService } from '../wordpressService';
 import { Post, Tag, Picture } from '../../models/wordpressModel';
+import { totalmem } from 'os';
 
 export class wpPostService extends wordpressService {
 
@@ -23,16 +24,22 @@ export class wpPostService extends wordpressService {
             this.options.uri = this.options.uri + `&sticky=${sticky}`;
         }
 
-
+        this.options.resolveWithFullResponse = true;
         return this.request
             .get(this.options)
             .then(x => {
+                let maxPages = x.headers['x-wp-totalpages'];
+                let total = x.headers['x-wp-total'];
                 let posts = new Array<Post>();
-                x.forEach(element => {
+                x.body.forEach(element => {
                     let post = this.mapPost(element);
                     posts.push(post);
                 });
-                return posts;
+                return {
+                    maxPages: maxPages,
+                    total: total,
+                    posts: posts
+                };
             });
     }
 

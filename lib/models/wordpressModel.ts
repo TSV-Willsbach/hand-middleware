@@ -28,6 +28,12 @@ export interface Post extends wordPress {
     picture?: Picture
 }
 
+export interface Posts {
+    maxPages: number,
+    total: number,
+    posts: Post[]
+}
+
 interface Sponsor {
     url?: string,
     type?: string
