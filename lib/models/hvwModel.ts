@@ -42,8 +42,14 @@ export interface Statistic {
         away: StatisticGoalValues
     },
     highestWin: {
-        home: string,
-        away: string
+        home: {
+            name: string,
+            result: string
+        },
+        away: {
+            name: string,
+            result: string
+        }
     },
     highestLose: {
         home: {

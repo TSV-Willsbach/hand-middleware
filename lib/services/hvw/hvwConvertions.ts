@@ -286,12 +286,12 @@ export class hvwConvertions {
                 }
             },
             highestWin: {
-                home: homeOpponent.win.name,
-                away: awayOpponent.win.name
+                home: { name: homeOpponent.win.name, result: homeOpponent.win.result },
+                away: { name: awayOpponent.win.name, result: awayOpponent.win.result }
             },
             highestLose: {
-                home: { name: homeOpponent.lose.name, result: '' },
-                away: { name: awayOpponent.lose.name, result: '' }
+                home: { name: homeOpponent.lose.name, result: homeOpponent.lose.result },
+                away: { name: awayOpponent.lose.name, result: awayOpponent.lose.result }
             }
         }
 
