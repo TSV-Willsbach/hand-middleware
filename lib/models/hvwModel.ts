@@ -91,7 +91,8 @@ export interface Game {
     comment?: string,
     sortText?: string,
     token?: string,
-    appId?: string
+    appId?: string,
+    report?: string
 }
 
 export interface Ligue {

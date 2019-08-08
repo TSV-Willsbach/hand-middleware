@@ -6,7 +6,6 @@ export class hvwService extends proxyService {
 
     protected uri = 'https://spo.handball4all.de/service/if_g_json.php'
     protected tickerUri = 'http://spo.handball4all.de/service/ticker.html?appid=&token=';
-    protected reportUri = 'http://spo.handball4all.de/misc/sboPublicReports.php?sGID=';
     protected hvwConv: hvwConvertions;
 
     constructor() {

@@ -31,12 +31,12 @@ export class hvwConvertions {
         try {
             id = ligueData.content.futureGames.gClassID;
             ligueData.content.futureGames.games.forEach(element => {
-                let game = this.mapGame(element);
+                let game = this.mapGame(element, ligueData);
                 games.push(game);
             });
         } catch (error) {
             ligueData.games.forEach(element => {
-                let game = this.mapGame(element);
+                let game = this.mapGame(element, ligueData);
                 games.push(game);
             });
         }
@@ -103,7 +103,7 @@ export class hvwConvertions {
         return score;
     }
 
-    public mapGame(element) {
+    public mapGame(element, ligue) {
         let game: Game;
 
         game = {
@@ -140,7 +140,8 @@ export class hvwConvertions {
             comment: element.gComment,
             sortText: element.gGroupsortTxt,
             appId: element.gAppid,
-            token: element.gToken
+            token: element.gToken,
+            report: ligue.head.repURL + element.sGID
         }
 
         return game;
