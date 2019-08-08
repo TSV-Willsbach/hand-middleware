@@ -311,8 +311,8 @@ export class hvwConvertions {
             return null;
         }
         let myDate = new Date(date.replace(/(\d{2}).(\d{2}).(\d{2})/, "$2/$1/$3"));
-        myDate.setUTCHours(+time.substring(0, 2));
-        myDate.setUTCMinutes(+time.substring(3, 5));
+        myDate.setHours(+time.substring(0, 2));
+        myDate.setMinutes(+time.substring(3, 5));
         return myDate;
     }
 }
