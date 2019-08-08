@@ -74,6 +74,22 @@ const models: TsoaRoute.Models = {
             "sponsor": { "ref": "Sponsor" },
         },
     },
+    "Goals": {
+        "properties": {
+            "shot": { "dataType": "double", "required": true },
+            "got": { "dataType": "double", "required": true },
+            "difference": { "dataType": "double" },
+        },
+    },
+    "Statistic": {
+        "properties": {
+            "gameWon": { "dataType": "any", "required": true },
+            "goalsShot": { "dataType": "any", "required": true },
+            "goalsGot": { "dataType": "any", "required": true },
+            "highestWin": { "dataType": "any", "required": true },
+            "highestLose": { "dataType": "any", "required": true },
+        },
+    },
     "Score": {
         "properties": {
             "id": { "dataType": "string", "required": true },
@@ -81,8 +97,9 @@ const models: TsoaRoute.Models = {
             "name": { "dataType": "string", "required": true },
             "live": { "dataType": "boolean", "required": true },
             "games": { "dataType": "any", "required": true },
-            "goals": { "dataType": "any", "required": true },
+            "goals": { "ref": "Goals", "required": true },
             "points": { "dataType": "any", "required": true },
+            "statistics": { "ref": "Statistic" },
         },
     },
     "Gymnasium": {
@@ -101,7 +118,7 @@ const models: TsoaRoute.Models = {
             "guest": { "dataType": "double", "required": true },
         },
     },
-    "Goals": {
+    "gameGoals": {
         "properties": {
             "end": { "ref": "Teams", "required": true },
             "halfTime": { "ref": "Teams", "required": true },
@@ -114,7 +131,7 @@ const models: TsoaRoute.Models = {
             "date": { "dataType": "datetime", "required": true },
             "gymnasium": { "ref": "Gymnasium", "required": true },
             "team": { "dataType": "any", "required": true },
-            "goals": { "ref": "Goals", "required": true },
+            "goals": { "ref": "gameGoals", "required": true },
             "points": { "ref": "Teams", "required": true },
             "referees": { "dataType": "string", "required": true },
             "comment": { "dataType": "string" },

@@ -52,7 +52,8 @@ export interface Statistic {
 }
 export interface Goals {
     shot: number,
-    got: number
+    got: number,
+    difference?: number
 }
 
 export interface Score {

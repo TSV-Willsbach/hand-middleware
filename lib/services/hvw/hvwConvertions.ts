@@ -48,7 +48,7 @@ export class hvwConvertions {
                 scores.push(score);
             });
         } catch (error) {
-            console.log('error', error);
+            console.log('Score', error);
         }
 
         try {
@@ -92,7 +92,8 @@ export class hvwConvertions {
             },
             goals: {
                 shot: element.numGoalsShot,
-                got: element.numGoalsGot
+                got: element.numGoalsGot,
+                difference: element.numGoalsShot - element.numGoalsGot
             },
             points: {
                 plus: element.pointsPlus,

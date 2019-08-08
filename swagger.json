@@ -241,6 +241,55 @@
 			],
 			"type": "object"
 		},
+		"Goals": {
+			"properties": {
+				"shot": {
+					"type": "number",
+					"format": "double"
+				},
+				"got": {
+					"type": "number",
+					"format": "double"
+				},
+				"difference": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"shot",
+				"got"
+			],
+			"type": "object"
+		},
+		"Statistic": {
+			"properties": {
+				"gameWon": {
+					"type": "object"
+				},
+				"goalsShot": {
+					"type": "object"
+				},
+				"goalsGot": {
+					"type": "object"
+				},
+				"highestWin": {
+					"type": "object"
+				},
+				"highestLose": {
+					"type": "object"
+				}
+			},
+			"required": [
+				"gameWon",
+				"goalsShot",
+				"goalsGot",
+				"highestWin",
+				"highestLose"
+			],
+			"type": "object"
+		},
 		"Score": {
 			"properties": {
 				"id": {
@@ -260,10 +309,14 @@
 					"type": "object"
 				},
 				"goals": {
-					"type": "object"
+					"$ref": "#/definitions/Goals"
 				},
 				"points": {
 					"type": "object"
+				},
+				"statistics": {
+					"$ref": "#/definitions/Statistic",
+					"x-nullable": true
 				}
 			},
 			"required": [
@@ -325,7 +378,7 @@
 			],
 			"type": "object"
 		},
-		"Goals": {
+		"gameGoals": {
 			"properties": {
 				"end": {
 					"$ref": "#/definitions/Teams"
@@ -359,7 +412,7 @@
 					"type": "object"
 				},
 				"goals": {
-					"$ref": "#/definitions/Goals"
+					"$ref": "#/definitions/gameGoals"
 				},
 				"points": {
 					"$ref": "#/definitions/Teams"
@@ -486,7 +539,7 @@
 	},
 	"info": {
 		"title": "wh_middleware",
-		"version": "0.0.6",
+		"version": "0.0.8",
 		"description": "TSV Willsbach Handball API's",
 		"license": {
 			"name": "MIT"
