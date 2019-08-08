@@ -105,6 +105,12 @@ export class hvwConvertions {
 
     public mapGame(element, ligue) {
         let game: Game;
+        let reportUrl;
+
+        if (element.sGID !== 0) {
+            reportUrl = ligue.head.repURL + element.sGID;
+        }
+
 
         game = {
             id: element.gID,
@@ -141,7 +147,7 @@ export class hvwConvertions {
             sortText: element.gGroupsortTxt,
             appId: element.gAppid,
             token: element.gToken,
-            report: ligue.head.repURL + element.sGID
+            report: reportUrl
         }
 
         return game;
