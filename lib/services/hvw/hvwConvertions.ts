@@ -262,11 +262,11 @@ export class hvwConvertions {
             gameWon: {
                 home: {
                     amount: homeGames.filter((el) => el.points.home === 2).length,
-                    games: homeGames.length
+                    games: homeGames.filter((el) => el.points.guest !== 0 || el.points.home !== 0).length
                 },
                 away: {
                     amount: awayGames.filter((el) => el.points.guest === 2).length,
-                    games: awayGames.length
+                    games: awayGames.filter((el) => el.points.guest !== 0 || el.points.home !== 0).length
                 }
             },
             goalsShot: {
