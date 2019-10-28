@@ -39,11 +39,18 @@ interface Sponsor {
     type?: string
 }
 
+export interface Sizes {
+    thumbnail?: Picture,
+    small?: Picture,
+    medium?: Picture,
+    large?: Picture
+}
+
 export interface Media extends wordPress, Picture {
     archived: boolean,
     alt_text: string,
     description: string,
-    sizes?: Picture[],
+    sizes?: Sizes,
     caption?: string,
     team?: string,
     sponsor?: Sponsor

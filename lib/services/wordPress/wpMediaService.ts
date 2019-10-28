@@ -1,3 +1,4 @@
+import { Picture, Sizes } from './../../models/wordpressModel';
 import { wordpressService } from '../wordpressService';
 import { Media } from '../../models/wordpressModel';
 
@@ -52,7 +53,7 @@ export class wpMediaService extends wordpressService {
         return this.getMedia(archived, 'sponsors');
     }
 
-    private mapMedia(element: any) {
+    private mapMedia(element: any): Media {
         let media: Media;
         media = {
             id: element.id,
@@ -74,6 +75,31 @@ export class wpMediaService extends wordpressService {
             },
             description: element.description.rendered,
         };
+        media.sizes = this.getSizes(element);
         return media;
+    }
+
+    private getSizes(element: any): Sizes {
+        let sizes: Sizes;
+        let elementSizes = element.media_details.sizes;
+        sizes = {
+            thumbnail: this.wp2Picture(elementSizes.thumbnail),
+            small: this.wp2Picture(elementSizes.medium),
+            medium: this.wp2Picture(elementSizes.medium_large),
+            large: this.wp2Picture(elementSizes.large)
+        };
+        return sizes;
+    }
+
+    private wp2Picture(wpPicture: any): Picture {
+        if (wpPicture === undefined) {
+            return null;
+        }
+        return {
+            url: wpPicture.source_url,
+            height: wpPicture.height,
+            width: wpPicture.width,
+            mime_type: wpPicture.mime_type
+        };
     }
 }
