@@ -38,8 +38,8 @@ export class WpController extends Controller {
     }
 
     @Get('/media/sponsors')
-    public async getSponsors(@Query() archived?: boolean): Promise<Media[]> {
-        return await new wpMediaService().getSponsors(archived);
+    public async getSponsors(@Query() archived?: boolean, @Query() type?: string): Promise<Media[]> {
+        return await new wpMediaService().getSponsors(archived, type);
     }
 
 

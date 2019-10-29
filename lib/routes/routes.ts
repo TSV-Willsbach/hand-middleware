@@ -55,6 +55,14 @@ const models: TsoaRoute.Models = {
             "posts": { "dataType": "array", "array": { "ref": "Post" }, "required": true },
         },
     },
+    "Sizes": {
+        "properties": {
+            "thumbnail": { "ref": "Picture" },
+            "small": { "ref": "Picture" },
+            "medium": { "ref": "Picture" },
+            "large": { "ref": "Picture" },
+        },
+    },
     "Sponsor": {
         "properties": {
             "url": { "dataType": "string" },
@@ -75,7 +83,7 @@ const models: TsoaRoute.Models = {
             "archived": { "dataType": "boolean", "required": true },
             "alt_text": { "dataType": "string", "required": true },
             "description": { "dataType": "string", "required": true },
-            "sizes": { "dataType": "array", "array": { "ref": "Picture" } },
+            "sizes": { "ref": "Sizes" },
             "caption": { "dataType": "string" },
             "team": { "dataType": "string" },
             "sponsor": { "ref": "Sponsor" },
@@ -145,6 +153,7 @@ const models: TsoaRoute.Models = {
             "sortText": { "dataType": "string" },
             "token": { "dataType": "string" },
             "appId": { "dataType": "string" },
+            "report": { "dataType": "string" },
         },
     },
     "Ligue": {
@@ -392,6 +401,7 @@ export function RegisterRoutes(app: express.Express) {
         function(request: any, response: any, next: any) {
             const args = {
                 archived: { "in": "query", "name": "archived", "dataType": "boolean" },
+                type: { "in": "query", "name": "type", "dataType": "string" },
             };
 
             let validatedArgs: any[] = [];

@@ -9,7 +9,7 @@ export class wpMediaService extends wordpressService {
         this.options.uri = this.uri;
     }
 
-    public getMedia(archived: boolean, search: string, teamId?: string) {
+    public getMedia(archived: boolean, search: string, teamId?: string, sponsorType?: string) {
         this.options.uri = this.uri + 'media?_embed&per_page=50';
 
         if (search != undefined) {
@@ -23,7 +23,9 @@ export class wpMediaService extends wordpressService {
                 response.forEach(element => {
                     let singleMedia = this.mapMedia(element);
                     if (singleMedia.archived === archived || archived === undefined) {
-                        if (singleMedia.team === teamId || teamId === undefined) {
+                        if (singleMedia.team === teamId || teamId === undefined && sponsorType === undefined) {
+                            media.push(singleMedia);
+                        } else if (singleMedia.sponsor.type === sponsorType || sponsorType === undefined) {
                             media.push(singleMedia);
                         }
 
@@ -49,8 +51,8 @@ export class wpMediaService extends wordpressService {
         return this.getMedia(archived, 'teams', teamId);
     }
 
-    public getSponsors(archived: boolean) {
-        return this.getMedia(archived, 'sponsors');
+    public getSponsors(archived: boolean, type: string) {
+        return this.getMedia(archived, 'sponsors', undefined, type);
     }
 
     private mapMedia(element: any): Media {
