@@ -23,9 +23,11 @@ export class wpMediaService extends wordpressService {
                 response.forEach(element => {
                     let singleMedia = this.mapMedia(element);
                     if (singleMedia.archived === archived || archived === undefined) {
-                        if (singleMedia.team === teamId || teamId === undefined && sponsorType === undefined) {
+                        if (singleMedia.team === teamId) {
                             media.push(singleMedia);
-                        } else if (singleMedia.sponsor.type === sponsorType || sponsorType === undefined) {
+                        } else if (singleMedia.sponsor.type === sponsorType) {
+                            media.push(singleMedia);
+                        } else if (sponsorType === undefined && teamId === undefined) {
                             media.push(singleMedia);
                         }
 
