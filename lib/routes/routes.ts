@@ -89,6 +89,22 @@ const models: TsoaRoute.Models = {
             "sponsor": { "ref": "Sponsor" },
         },
     },
+    "playerStat": {
+        "properties": {
+            "name": { "dataType": "string", "required": true },
+            "preName": { "dataType": "string", "required": true },
+            "games": { "dataType": "double", "required": true },
+            "penalties": { "dataType": "double", "required": true },
+            "penaltyGoals": { "dataType": "double", "required": true },
+            "penaltyQuota": { "dataType": "double", "required": true },
+            "yellowCard": { "dataType": "double", "required": true },
+            "twoMinutes": { "dataType": "double", "required": true },
+            "redCard": { "dataType": "double", "required": true },
+            "blueCard": { "dataType": "double", "required": true },
+            "goals": { "dataType": "double", "required": true },
+            "goalsPerGame": { "dataType": "double", "required": true },
+        },
+    },
     "Goals": {
         "properties": {
             "shot": { "dataType": "double", "required": true },
@@ -452,6 +468,46 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams/:id/games',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+                saison: { "in": "query", "name": "saison", "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getTeamGames.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams/:id/statistic',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+                saison: { "in": "query", "name": "saison", "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getTeamStatistic.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/hvw/club',

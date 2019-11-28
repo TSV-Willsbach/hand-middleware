@@ -1,9 +1,11 @@
-import { Controller, Route, Post, Get, Tags } from 'tsoa';
+import { playerStat } from './../models/teamModel';
+import { Controller, Route, Get, Tags, Query, Path } from 'tsoa';
 import * as mongoose from 'mongoose';
-import { TeamSchema } from '../models/teamModel';
-import { Request, Response } from 'express';
+import { TeamSchema, GamesSchema, Games } from '../models/teamModel';
+import { teamService } from "../services/teamService";
 
 const Team = mongoose.model('Team', TeamSchema);
+const Games = mongoose.model('Games', GamesSchema);
 
 @Route('/teams')
 @Tags('Teams')
@@ -46,5 +48,30 @@ export class TeamController extends Controller {
             this.setStatus(500);
             console.error('Caught error', err);
         }
+    }
+
+
+    @Get('/{id}/games')
+    public async getTeamGames(@Path('id') id: string, @Query() saison?: string) {
+        try {
+            let teamStats;
+            if (saison === undefined) {
+                teamStats = await Games.find({ team: id });
+            } else {
+                teamStats = await Games.find({ team: id, saison: saison });
+            }
+
+            return teamStats;
+        } catch (err) {
+            this.setStatus(500);
+            console.error('Caught error', err);
+        }
+    }
+
+    @Get('/{id}/statistic')
+    public async getTeamStatistic(@Path('id') id: string, @Query() saison?: string): Promise<playerStat[]> {
+        let games = this.getTeamGames(id, saison);
+
+        return await new teamService().getStatistics(games);
     }
 }

@@ -283,6 +283,71 @@
 			],
 			"type": "object"
 		},
+		"playerStat": {
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"preName": {
+					"type": "string"
+				},
+				"games": {
+					"type": "number",
+					"format": "double"
+				},
+				"penalties": {
+					"type": "number",
+					"format": "double"
+				},
+				"penaltyGoals": {
+					"type": "number",
+					"format": "double"
+				},
+				"penaltyQuota": {
+					"type": "number",
+					"format": "double"
+				},
+				"yellowCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"twoMinutes": {
+					"type": "number",
+					"format": "double"
+				},
+				"redCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"blueCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"goals": {
+					"type": "number",
+					"format": "double"
+				},
+				"goalsPerGame": {
+					"type": "number",
+					"format": "double"
+				}
+			},
+			"required": [
+				"name",
+				"preName",
+				"games",
+				"penalties",
+				"penaltyGoals",
+				"penaltyQuota",
+				"yellowCard",
+				"twoMinutes",
+				"redCard",
+				"blueCard",
+				"goals",
+				"goalsPerGame"
+			],
+			"type": "object"
+		},
 		"Goals": {
 			"properties": {
 				"shot": {
@@ -1002,6 +1067,77 @@
 						"in": "path",
 						"name": "id",
 						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/teams/{id}/games": {
+			"get": {
+				"operationId": "GetTeamGames",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "saison",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/teams/{id}/statistic": {
+			"get": {
+				"operationId": "GetTeamStatistic",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/playerStat"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "saison",
+						"required": false,
 						"type": "string"
 					}
 				]
