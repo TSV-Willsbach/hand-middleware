@@ -56,9 +56,13 @@ export class TeamController extends Controller {
         try {
             let teamStats;
             if (saison === undefined) {
-                teamStats = await Games.find({ team: id });
+                teamStats = await Games.find({ team: id })
+                    .populate('playerStatistics.player')
+                    .populate('team');
             } else {
-                teamStats = await Games.find({ team: id, saison: saison });
+                teamStats = await Games.find({ team: id, saison: saison })
+                    .populate('playerStatistics.player')
+                    .populate('team');
             }
 
             return teamStats;

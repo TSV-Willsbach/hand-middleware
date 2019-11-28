@@ -55,6 +55,12 @@ export const GamesSchema = new Schema({
         ref: 'Team'
     },
     playerStatistics: [{
-        type: Object
+        player: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Player'
+        },
+        games: {
+            type: Number
+        }
     }]
 });
