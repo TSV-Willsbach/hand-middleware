@@ -61,6 +61,27 @@ export const GamesSchema = new Schema({
         },
         games: {
             type: Number
+        },
+        goals: {
+            type: Number
+        },
+        penalties: {
+            type: Number
+        },
+        penaltyGoals: {
+            type: Number
+        },
+        yellowCard: {
+            type: Number
+        },
+        twoMinutes: {
+            type: Number
+        },
+        redCard: {
+            type: Number
+        },
+        blueCard: {
+            type: Number
         }
     }]
 });

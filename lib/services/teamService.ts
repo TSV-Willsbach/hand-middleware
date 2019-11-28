@@ -10,15 +10,15 @@ export class teamService extends proxyService {
             result.forEach(element => {
                 element.playerStatistics.forEach(player => {
                     let found = players.find(pl => {
-                        if (pl.name === player.name && pl.preName === player.preName) {
+                        if (pl.name === player.player.name && pl.preName === player.player.prename) {
                             return true;
                         }
                         return false;
                     });
                     if (found === undefined) {
                         players.push({
-                            name: player.name,
-                            preName: player.preName,
+                            name: player.player.name,
+                            preName: player.player.prename,
                             games: 1,
                             goals: player.goals,
                             goalsPerGame: player.goals,
