@@ -238,8 +238,8 @@ export class hvwConvertions {
         });
 
         awayGames.forEach(element => {
-            awayGoals.shot = awayGoals.shot + element.goals.end.home;
-            awayGoals.got = awayGoals.got + element.goals.end.guest;
+            awayGoals.shot = awayGoals.shot + element.goals.end.guest;
+            awayGoals.got = awayGoals.got + element.goals.end.home;
 
             let difference = element.goals.end.home - element.goals.end.guest;
 
