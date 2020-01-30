@@ -86,6 +86,9 @@ export class wpMediaService extends wordpressService {
     private getSizes(element: any): Sizes {
         let sizes: Sizes;
         let elementSizes = element.media_details.sizes;
+        if (elementSizes === undefined) {
+            return null;
+        }
         sizes = {
             thumbnail: this.wp2Picture(elementSizes.thumbnail),
             small: this.wp2Picture(elementSizes.medium),
