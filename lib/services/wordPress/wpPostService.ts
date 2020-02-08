@@ -99,8 +99,14 @@ export class wpPostService extends wordpressService {
         let size;
 
 
-        if (element.medium_large != undefined) {
+        if (element.medium_large === undefined && element.medium === undefined && element.large != undefined) {
+            size = element.large;
+        } else if (element.medium_large != undefined) {
             size = element.medium_large;
+        } else if (element.medium != undefined) {
+            size = element.medium;
+        } else if (element.small != undefined) {
+            size = element.small;
         } else {
             size = element.thumbnail;
         }
