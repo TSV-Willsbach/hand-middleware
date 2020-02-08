@@ -98,8 +98,7 @@ export class wpPostService extends wordpressService {
         let pic: Picture;
         let size;
 
-
-        if (element.medium_large === undefined && element.medium === undefined && element.large != undefined) {
+        if (element.large != undefined) {
             size = element.large;
         } else if (element.medium_large != undefined) {
             size = element.medium_large;
