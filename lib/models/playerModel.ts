@@ -29,6 +29,9 @@ export const PlayerSchema = new Schema({
     birthday: {
         type: Date
     },
+    picture: {
+        type: String
+    },
     coach: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
@@ -41,5 +44,11 @@ export const PlayerSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Clubs'
 
-    }]
+    }],
+    socialMedia: {
+        type: Object
+    },
+    dsgvo: {
+        type: Boolean
+    }
 });

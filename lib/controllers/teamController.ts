@@ -1,3 +1,4 @@
+import { PlayerEncryption } from './../services/playerEncryption';
 import { playerStat } from './../models/teamModel';
 import { Controller, Route, Get, Tags, Query, Path } from 'tsoa';
 import * as mongoose from 'mongoose';
@@ -29,6 +30,13 @@ export class TeamController extends Controller {
             let teams = await Team.find({})
                 .populate('players')
                 .populate('coaches');
+
+            let encryption = new PlayerEncryption();
+            teams.forEach(element => {
+                element.players = encryption.encryptPersonalData(element.players);
+                element.coaches = encryption.encryptPersonalData(element.players);
+            });
+
             return teams;
         } catch (err) {
             this.setStatus(500);
