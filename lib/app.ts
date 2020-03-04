@@ -1,5 +1,5 @@
 import * as express from "express";
-import apicache from 'apicache'
+import * as apicache from 'apicache';
 import * as cors from 'cors';
 import * as compression from 'compression';
 import * as bodyParser from "body-parser";
@@ -12,7 +12,7 @@ import './controllers/teamController';
 import './controllers/wpController';
 import './controllers/hvwController';
 
-let cache = apicache.middleware
+let cache = apicache.middleware;
 
 class App {
 
