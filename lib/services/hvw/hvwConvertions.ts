@@ -167,14 +167,16 @@ export class hvwConvertions {
         let statistic: Statistic;
         let awayGames: Array<Game>;
         let regex: RegExp;
+
         let teamNumber = +team.name.match(/\d+(?=\D*$)/g);
         if (teamNumber > 10) {
             teamNumber = 0;
         }
 
         let shortName = team.name.replace(/[0-9]/g, '');
+        shortName = this.convertSpecialShortNames(shortName);
         shortName = shortName.replace(/  +/g, ' ');
-        shortName = shortName.substring(0, 7);
+        shortName = shortName.substring(0, 6);
 
         if (isNaN(teamNumber) || teamNumber === 0) {
             regex = new RegExp(`(?:${shortName})+`);
@@ -314,6 +316,11 @@ export class hvwConvertions {
         return statistic;
     }
 
+
+    private convertSpecialShortNames(shortName: string) {
+        shortName = shortName.replace('Staufer Bad', ' ');
+        return shortName;
+    }
 
     public buildDate(date, time): Date {
         if (date === undefined) {
