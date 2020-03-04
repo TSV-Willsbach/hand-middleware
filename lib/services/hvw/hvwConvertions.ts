@@ -28,27 +28,36 @@ export class hvwConvertions {
         let id;
         let games = new Array<Game>();
         let scores = new Array<Score>();
-        try {
-            id = ligueData.content.futureGames.gClassID;
-            ligueData.content.futureGames.games.forEach(element => {
-                let game = this.mapGame(element, ligueData);
-                games.push(game);
-            });
-        } catch (error) {
-            ligueData.games.forEach(element => {
-                let game = this.mapGame(element, ligueData);
-                games.push(game);
-            });
-        }
 
-        try {
-            ligueData.content.score.forEach(element => {
-                let score = this.mapScore(element);
-                score.statistics = this.calcStat(score, games);
-                scores.push(score);
-            });
-        } catch (error) {
-            console.log('Score', error);
+        if (ligueData.content !== undefined) {
+            try {
+                id = ligueData.content.futureGames.gClassID;
+                ligueData.content.futureGames.games.forEach(element => {
+                    let game = this.mapGame(element, ligueData);
+                    games.push(game);
+                });
+            } catch (error) {
+                console.log('Game', error);
+            }
+
+            try {
+                ligueData.content.score.forEach(element => {
+                    let score = this.mapScore(element);
+                    score.statistics = this.calcStat(score, games);
+                    scores.push(score);
+                });
+            } catch (error) {
+                console.log('Score', error);
+            }
+        } else {
+            try {
+                ligueData.games.forEach(element => {
+                    let game = this.mapGame(element, ligueData);
+                    games.push(game);
+                });
+            } catch (error) {
+                console.log('Game', error);
+            }
         }
 
         try {
