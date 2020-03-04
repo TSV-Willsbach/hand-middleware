@@ -34,7 +34,7 @@ export class TeamController extends Controller {
             let encryption = new PlayerEncryption();
             teams.forEach(element => {
                 element.players = encryption.encryptPersonalData(element.players);
-                element.coaches = encryption.encryptPersonalData(element.players);
+                element.coaches = encryption.encryptPersonalData(element.coaches);
             });
 
             return teams;
@@ -54,7 +54,7 @@ export class TeamController extends Controller {
 
             let encryption = new PlayerEncryption();
             teams.players = encryption.encryptPersonalData(teams.players);
-            teams.coaches = encryption.encryptPersonalData(teams.players);
+            teams.coaches = encryption.encryptPersonalData(teams.coaches);
             return teams;
         } catch (err) {
             this.setStatus(500);
