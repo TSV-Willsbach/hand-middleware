@@ -19,7 +19,8 @@ export class PlayerController extends Controller {
     public async getPlayers() {
         try {
             let players = await Player.find()
-                .populate('team');
+                .populate('team')
+                .populate('lastClubs');
 
             return players;
         } catch (err) {

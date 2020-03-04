@@ -4,6 +4,7 @@ import { PlayerController } from './../controllers/playerController';
 import { WpController } from './../controllers/wpController';
 import { TeamController } from './../controllers/teamController';
 import { hvwController } from './../controllers/hvwController';
+import { ClubController } from './../controllers/clubController';
 import * as express from 'express';
 
 const models: TsoaRoute.Models = {
@@ -583,6 +584,43 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.getLigue.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/clubs',
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ClubController();
+
+
+            const promise = controller.getClubs.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/clubs/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ClubController();
+
+
+            const promise = controller.getSingleClub.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
 

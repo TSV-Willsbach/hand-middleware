@@ -1256,6 +1256,55 @@
 					}
 				]
 			}
+		},
+		"/clubs": {
+			"get": {
+				"operationId": "GetClubs",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Clubs"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/clubs/{id}": {
+			"get": {
+				"operationId": "GetSingleClub",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Clubs"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
 		}
 	},
 	"produces": [

@@ -7,6 +7,7 @@ import * as mongoose from "mongoose";
 import * as swaggerUi from 'swagger-ui-express';
 import { RegisterRoutes } from "./routes/routes";
 
+import './controllers/clubController';
 import './controllers/playerController';
 import './controllers/teamController';
 import './controllers/wpController';
