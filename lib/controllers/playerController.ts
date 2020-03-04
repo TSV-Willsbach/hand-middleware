@@ -39,6 +39,8 @@ export class PlayerController extends Controller {
         try {
             let player = await Player.findById(ID)
                 .populate('team');
+
+            player = new PlayerEncryption().encyptSinglePerson(player);
             return player;
 
         } catch (err) {

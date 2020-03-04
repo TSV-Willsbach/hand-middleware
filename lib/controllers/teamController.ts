@@ -51,6 +51,10 @@ export class TeamController extends Controller {
             let teams = await Team.findById(id)
                 .populate('players')
                 .populate('coaches');
+
+            let encryption = new PlayerEncryption();
+            teams.players = encryption.encryptPersonalData(teams.players);
+            teams.coaches = encryption.encryptPersonalData(teams.players);
             return teams;
         } catch (err) {
             this.setStatus(500);
