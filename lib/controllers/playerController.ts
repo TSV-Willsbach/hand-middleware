@@ -38,7 +38,8 @@ export class PlayerController extends Controller {
     public async getSinglePlayer(@Path('id') ID: string) {
         try {
             let player = await Player.findById(ID)
-                .populate('team');
+                .populate('team')
+                .populate('lastClubs');
 
             player = new PlayerEncryption().encyptSinglePerson(player);
             return player;
