@@ -11,7 +11,7 @@ export class wpPostService extends proxyService {
     }
 
     public getPosts(page, category) {
-        this.options.uri = this.uri + 'posts/' + `?_embed`;
+        this.options.uri = this.uri + 'posts/' + `?_embed&per_page=9`;
 
         if (page != null) {
             this.options.uri = this.options.uri + `&page=${page}`;
