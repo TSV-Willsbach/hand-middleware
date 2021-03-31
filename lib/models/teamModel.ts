@@ -22,3 +22,66 @@ export const TeamSchema = new Schema({
         ref: 'Player'
     }]
 });
+
+export interface Games {
+    saison: string,
+    team: string
+}
+
+export interface playerStat {
+    name: string,
+    preName: string,
+    games: number,
+    penalties: number,
+    penaltyGoals: number,
+    penaltyQuota: number,
+    yellowCard: number,
+    twoMinutes: number,
+    redCard: number,
+    blueCard: number,
+    goals: number,
+    goalsPerGame: number
+}
+
+export const GamesSchema = new Schema({
+    opponent: {
+        type: String
+    },
+    saison: {
+        type: String
+    },
+    team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Team'
+    },
+    playerStatistics: [{
+        player: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Player'
+        },
+        games: {
+            type: Number
+        },
+        goals: {
+            type: Number
+        },
+        penalties: {
+            type: Number
+        },
+        penaltyGoals: {
+            type: Number
+        },
+        yellowCard: {
+            type: Number
+        },
+        twoMinutes: {
+            type: Number
+        },
+        redCard: {
+            type: Number
+        },
+        blueCard: {
+            type: Number
+        }
+    }]
+});

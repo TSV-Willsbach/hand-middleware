@@ -45,11 +45,612 @@
 				"number"
 			],
 			"type": "object"
+		},
+		"Tag": {
+			"properties": {
+				"id": {
+					"type": "number",
+					"format": "double"
+				},
+				"name": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id"
+			],
+			"type": "object"
+		},
+		"Picture": {
+			"properties": {
+				"url": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"height": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"mime_type": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"url"
+			],
+			"type": "object"
+		},
+		"Post": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"modified": {
+					"type": "string",
+					"format": "date-time",
+					"x-nullable": true
+				},
+				"title": {
+					"type": "string"
+				},
+				"author": {
+					"type": "string"
+				},
+				"excerpt": {
+					"type": "string"
+				},
+				"content": {
+					"type": "string"
+				},
+				"categories": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Tag"
+					},
+					"x-nullable": true
+				},
+				"tags": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Tag"
+					},
+					"x-nullable": true
+				},
+				"isNew": {
+					"type": "boolean",
+					"x-nullable": true
+				},
+				"sticky": {
+					"type": "boolean",
+					"x-nullable": true
+				},
+				"picture": {
+					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"date",
+				"title",
+				"author",
+				"excerpt",
+				"content"
+			],
+			"type": "object"
+		},
+		"Posts": {
+			"properties": {
+				"maxPages": {
+					"type": "number",
+					"format": "double"
+				},
+				"total": {
+					"type": "number",
+					"format": "double"
+				},
+				"posts": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Post"
+					}
+				}
+			},
+			"required": [
+				"maxPages",
+				"total",
+				"posts"
+			],
+			"type": "object"
+		},
+		"Sizes": {
+			"properties": {
+				"thumbnail": {
+					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				},
+				"small": {
+					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				},
+				"medium": {
+					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				},
+				"large": {
+					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				}
+			},
+			"type": "object"
+		},
+		"Sponsor": {
+			"properties": {
+				"url": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"type": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"type": "object"
+		},
+		"Media": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"modified": {
+					"type": "string",
+					"format": "date-time",
+					"x-nullable": true
+				},
+				"title": {
+					"type": "string"
+				},
+				"author": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"height": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				},
+				"mime_type": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"archived": {
+					"type": "boolean"
+				},
+				"alt_text": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"sizes": {
+					"$ref": "#/definitions/Sizes",
+					"x-nullable": true
+				},
+				"caption": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"team": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"sponsor": {
+					"$ref": "#/definitions/Sponsor",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"date",
+				"title",
+				"author",
+				"url",
+				"archived",
+				"alt_text",
+				"description"
+			],
+			"type": "object"
+		},
+		"playerStat": {
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"preName": {
+					"type": "string"
+				},
+				"games": {
+					"type": "number",
+					"format": "double"
+				},
+				"penalties": {
+					"type": "number",
+					"format": "double"
+				},
+				"penaltyGoals": {
+					"type": "number",
+					"format": "double"
+				},
+				"penaltyQuota": {
+					"type": "number",
+					"format": "double"
+				},
+				"yellowCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"twoMinutes": {
+					"type": "number",
+					"format": "double"
+				},
+				"redCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"blueCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"goals": {
+					"type": "number",
+					"format": "double"
+				},
+				"goalsPerGame": {
+					"type": "number",
+					"format": "double"
+				}
+			},
+			"required": [
+				"name",
+				"preName",
+				"games",
+				"penalties",
+				"penaltyGoals",
+				"penaltyQuota",
+				"yellowCard",
+				"twoMinutes",
+				"redCard",
+				"blueCard",
+				"goals",
+				"goalsPerGame"
+			],
+			"type": "object"
+		},
+		"Goals": {
+			"properties": {
+				"shot": {
+					"type": "number",
+					"format": "double"
+				},
+				"got": {
+					"type": "number",
+					"format": "double"
+				},
+				"difference": {
+					"type": "number",
+					"format": "double",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"shot",
+				"got"
+			],
+			"type": "object"
+		},
+		"Statistic": {
+			"properties": {
+				"gameWon": {
+					"type": "object"
+				},
+				"goalsShot": {
+					"type": "object"
+				},
+				"goalsGot": {
+					"type": "object"
+				},
+				"highestWin": {
+					"type": "object"
+				},
+				"highestLose": {
+					"type": "object"
+				}
+			},
+			"required": [
+				"gameWon",
+				"goalsShot",
+				"goalsGot",
+				"highestWin",
+				"highestLose"
+			],
+			"type": "object"
+		},
+		"Score": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"rank": {
+					"type": "number",
+					"format": "double"
+				},
+				"name": {
+					"type": "string"
+				},
+				"live": {
+					"type": "boolean"
+				},
+				"games": {
+					"type": "object"
+				},
+				"goals": {
+					"$ref": "#/definitions/Goals"
+				},
+				"points": {
+					"type": "object"
+				},
+				"statistics": {
+					"$ref": "#/definitions/Statistic",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"rank",
+				"name",
+				"live",
+				"games",
+				"goals",
+				"points"
+			],
+			"type": "object"
+		},
+		"Gymnasium": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"number": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"street": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"postal": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"city": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"number"
+			],
+			"type": "object"
+		},
+		"Teams": {
+			"properties": {
+				"home": {
+					"type": "number",
+					"format": "double"
+				},
+				"guest": {
+					"type": "number",
+					"format": "double"
+				}
+			},
+			"required": [
+				"home",
+				"guest"
+			],
+			"type": "object"
+		},
+		"gameGoals": {
+			"properties": {
+				"end": {
+					"$ref": "#/definitions/Teams"
+				},
+				"halfTime": {
+					"$ref": "#/definitions/Teams"
+				}
+			},
+			"required": [
+				"end",
+				"halfTime"
+			],
+			"type": "object"
+		},
+		"Game": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"live": {
+					"type": "boolean"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"gymnasium": {
+					"$ref": "#/definitions/Gymnasium"
+				},
+				"team": {
+					"type": "object"
+				},
+				"goals": {
+					"$ref": "#/definitions/gameGoals"
+				},
+				"points": {
+					"$ref": "#/definitions/Teams"
+				},
+				"referees": {
+					"type": "string"
+				},
+				"comment": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"sortText": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"token": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"appId": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"report": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"live",
+				"date",
+				"gymnasium",
+				"team",
+				"goals",
+				"points",
+				"referees"
+			],
+			"type": "object"
+		},
+		"Ligue": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"shortName": {
+					"type": "string"
+				},
+				"comment": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"headline1": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"headline2": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"actualized": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"scores": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Score"
+					},
+					"x-nullable": true
+				},
+				"games": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Game"
+					}
+				}
+			},
+			"required": [
+				"id",
+				"name",
+				"shortName",
+				"games"
+			],
+			"type": "object"
+		},
+		"Club": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"shortName": {
+					"type": "string"
+				},
+				"headline1": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"headline2": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"actualized": {
+					"type": "string",
+					"x-nullable": true
+				},
+				"ligues": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Ligue"
+					},
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"id",
+				"name",
+				"shortName"
+			],
+			"type": "object"
 		}
 	},
 	"info": {
 		"title": "wh_middleware",
-		"version": "0.0.5",
+		"version": "0.0.9",
 		"description": "TSV Willsbach Handball API's",
 		"license": {
 			"name": "MIT"
@@ -194,7 +795,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Posts"
 						}
 					}
 				},
@@ -216,6 +817,12 @@
 						"required": false,
 						"format": "double",
 						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sticky",
+						"required": false,
+						"type": "boolean"
 					}
 				]
 			}
@@ -230,7 +837,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Post"
 						}
 					}
 				},
@@ -258,7 +865,7 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Posts"
 						}
 					}
 				},
@@ -273,6 +880,145 @@
 						"required": false,
 						"format": "double",
 						"type": "number"
+					}
+				]
+			}
+		},
+		"/wp/media/all": {
+			"get": {
+				"operationId": "GetMedia",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Media"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "archived",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/media/all/{id}": {
+			"get": {
+				"operationId": "GetSingleMedia",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Media"
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/media/teams": {
+			"get": {
+				"operationId": "GetTeamPhotos",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Media"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "archived",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"in": "query",
+						"name": "teamId",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/wp/media/sponsors": {
+			"get": {
+				"operationId": "GetSponsors",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Media"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Wordpress"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "archived",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"required": false,
+						"type": "string"
 					}
 				]
 			}
@@ -326,9 +1072,9 @@
 				]
 			}
 		},
-		"/hvw/games": {
+		"/teams/{id}/games": {
 			"get": {
-				"operationId": "GetGames",
+				"operationId": "GetTeamGames",
 				"produces": [
 					"application/json"
 				],
@@ -341,23 +1087,28 @@
 					}
 				},
 				"tags": [
-					"HVW"
+					"Teams"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
 						"in": "query",
-						"name": "periode",
+						"name": "saison",
 						"required": false,
-						"format": "double",
-						"type": "number"
+						"type": "string"
 					}
 				]
 			}
 		},
-		"/hvw/games/{id}": {
+		"/teams/{id}/statistic": {
 			"get": {
-				"operationId": "GetGame",
+				"operationId": "GetTeamStatistic",
 				"produces": [
 					"application/json"
 				],
@@ -365,7 +1116,68 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/playerStat"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "saison",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/hvw/club": {
+			"get": {
+				"operationId": "GetClubs",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Club"
+							}
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/hvw/club/{id}": {
+			"get": {
+				"operationId": "GetClub",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Club"
 						}
 					}
 				},
@@ -383,9 +1195,71 @@
 				]
 			}
 		},
+		"/hvw/games": {
+			"get": {
+				"operationId": "GetGames",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Game"
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request"
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
 		"/hvw/ligue": {
 			"get": {
 				"operationId": "GetLigue",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Ligue"
+						}
+					}
+				},
+				"tags": [
+					"HVW"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/clubs": {
+			"get": {
+				"operationId": "GetClubs",
 				"produces": [
 					"application/json"
 				],
@@ -398,12 +1272,33 @@
 					}
 				},
 				"tags": [
-					"HVW"
+					"Clubs"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/clubs/{id}": {
+			"get": {
+				"operationId": "GetSingleClub",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Clubs"
 				],
 				"security": [],
 				"parameters": [
 					{
-						"in": "query",
+						"in": "path",
 						"name": "id",
 						"required": true,
 						"type": "string"

@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Player, PlayerSchema } from '../models/playerModel';
 import { Route, Controller, Post, Get, Path, Tags, SuccessResponse, Body, Delete, Put } from 'tsoa';
+import { PlayerEncryption } from '../services/playerEncryption';
 
 const Player = mongoose.model('Player', PlayerSchema);
 
@@ -19,7 +20,11 @@ export class PlayerController extends Controller {
     public async getPlayers() {
         try {
             let players = await Player.find()
-                .populate('team');
+                .populate('team')
+                .populate('lastClubs');
+
+
+            players = new PlayerEncryption().encryptPersonalData(players);
 
             return players;
         } catch (err) {
@@ -33,7 +38,10 @@ export class PlayerController extends Controller {
     public async getSinglePlayer(@Path('id') ID: string) {
         try {
             let player = await Player.findById(ID)
-                .populate('team');
+                .populate('team')
+                .populate('lastClubs');
+
+            player = new PlayerEncryption().encyptSinglePerson(player);
             return player;
 
         } catch (err) {

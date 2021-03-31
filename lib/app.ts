@@ -1,12 +1,19 @@
 import * as express from "express";
+import * as apicache from 'apicache';
+import * as cors from 'cors';
+import * as compression from 'compression';
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 import * as swaggerUi from 'swagger-ui-express';
 import { RegisterRoutes } from "./routes/routes";
+
+import './controllers/clubController';
 import './controllers/playerController';
 import './controllers/teamController';
 import './controllers/wpController';
 import './controllers/hvwController';
+
+let cache = apicache.middleware;
 
 class App {
 
@@ -26,10 +33,19 @@ class App {
     }
 
     private config(): void {
+        // higher-order function returns false for responses of other status codes (e.g. 403, 404, 500, etc)
+        const onlyStatus200 = (req, res) => res.statusCode === 200;
+        // cache 
+        this.app.use(cache('5 minutes', onlyStatus200));
+        // cross-orign
+        this.app.use(cors());
+        // compression
+        this.app.use(compression())
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
+
     }
 
     private mongoSetup(): void {
