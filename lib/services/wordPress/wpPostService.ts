@@ -9,7 +9,7 @@ export class wpPostService extends wordpressService {
         this.options.uri = this.uri;
     }
 
-    public getPosts(page?: number, category?: number, sticky?: boolean) {
+    public getPosts(page?: number, category?: number, hide_start?: boolean, sticky?: boolean) {
         this.options.uri = this.uri + 'posts' +  `?_embed&per_page=9`;
 
         if (page != null) {
@@ -23,6 +23,17 @@ export class wpPostService extends wordpressService {
         if (sticky != undefined) {
             this.options.uri = this.options.uri + `&sticky=${sticky}`;
         }
+
+        if (hide_start != null){
+            let noStartValue;
+            if(hide_start === false){
+                noStartValue = "NOT EXISTS";
+            } else {
+                noStartValue = "EXISTS";
+            }
+            this.options.uri = this.options.uri + `&filter[meta_key]=hide_start&filter[meta_compare]=${noStartValue}&filter[meta_value]=1`;
+        }
+
 
         this.options.resolveWithFullResponse = true;
         return this.request
@@ -77,6 +88,9 @@ export class wpPostService extends wordpressService {
                 name: el.name
             });
         });
+        if(element.acf.hide_start === null){
+            element.acf.hide_start = false;
+        }
         post = {
             id: element.id,
             title: element.title.rendered,
@@ -89,7 +103,10 @@ export class wpPostService extends wordpressService {
             categories: categories,
             tags: tags,
             excerpt: element.excerpt.rendered,
-            content: element.content.rendered
+            content: element.content.rendered,
+            customAttr: {
+                hide_start: element.acf.hide_start 
+            }
         };
         return post;
     }

@@ -25,7 +25,12 @@ export interface Post extends wordPress {
     tags?: Tag[],
     isNew?: boolean,
     sticky?: boolean,
-    picture?: Picture
+    picture?: Picture,
+    customAttr?: PostCustomAttributes
+}
+
+export interface PostCustomAttributes {
+    hide_start?: boolean
 }
 
 export interface Posts {

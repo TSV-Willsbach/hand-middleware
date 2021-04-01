@@ -33,6 +33,11 @@ const models: TsoaRoute.Models = {
             "mime_type": { "dataType": "string" },
         },
     },
+    "PostCustomAttributes": {
+        "properties": {
+            "hide_start": { "dataType": "boolean" },
+        },
+    },
     "Post": {
         "properties": {
             "id": { "dataType": "string", "required": true },
@@ -47,6 +52,7 @@ const models: TsoaRoute.Models = {
             "isNew": { "dataType": "boolean" },
             "sticky": { "dataType": "boolean" },
             "picture": { "ref": "Picture" },
+            "customAttr": { "ref": "PostCustomAttributes" },
         },
     },
     "Posts": {
@@ -301,6 +307,7 @@ export function RegisterRoutes(app: express.Express) {
             const args = {
                 page: { "in": "query", "name": "page", "dataType": "double" },
                 category: { "in": "query", "name": "category", "dataType": "double" },
+                hide_start: { "default": true, "in": "query", "name": "hide_start", "dataType": "boolean" },
                 sticky: { "in": "query", "name": "sticky", "dataType": "boolean" },
             };
 

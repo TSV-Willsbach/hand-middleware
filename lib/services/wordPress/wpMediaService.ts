@@ -15,6 +15,23 @@ export class wpMediaService extends wordpressService {
         if (search != undefined) {
             this.options.uri = this.options.uri + `&search=${search}`
         }
+        if (archived != null){
+            let noStartValue;
+            if(archived === false){
+                noStartValue = "NOT EXISTS";
+            } else {
+                noStartValue = "EXISTS";
+            }
+            this.options.uri = this.options.uri + `&filter[meta_query][0][key]=archive&filter[meta_query][0][compare]=${noStartValue}&filter[meta_query][0][value]=1`;
+        }
+
+        if (teamId != null){
+            this.options.uri = this.options.uri + `&filter[meta_query][1][key]=team&filter[meta_query][1][value]=${teamId}`;
+        }
+
+        if(sponsorType != null){
+            this.options.uri = this.options.uri + `&filter[meta_query][2][key]=sponsorType&filter[meta_query][2][value]=${sponsorType}`;
+        }
 
         return this.request
             .get(this.options)
@@ -22,17 +39,7 @@ export class wpMediaService extends wordpressService {
                 let media = new Array<Media>();
                 response.forEach(element => {
                     let singleMedia = this.mapMedia(element);
-                    if (singleMedia.archived === archived || archived === undefined) {
-                        if (singleMedia.team === teamId) {
-                            media.push(singleMedia);
-                        } else if (singleMedia.sponsor.type === sponsorType) {
-                            media.push(singleMedia);
-                        } else if (sponsorType === undefined && teamId === undefined) {
-                            media.push(singleMedia);
-                        }
-
-                    }
-
+                    media.push(singleMedia);
                 });
 
                 return media;
