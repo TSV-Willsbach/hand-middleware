@@ -16,13 +16,13 @@ export class wpMediaService extends wordpressService {
             this.options.uri = this.options.uri + `&search=${search}`
         }
         if (archived != null){
-            let noStartValue;
+            let archivedValue;
             if(archived === false){
-                noStartValue = "NOT EXISTS";
+                archivedValue = 0;
             } else {
-                noStartValue = "EXISTS";
-            }
-            this.options.uri = this.options.uri + `&filter[meta_query][0][key]=archive&filter[meta_query][0][compare]=${noStartValue}&filter[meta_query][0][value]=1`;
+                archivedValue = 1;
+            } // &filter[meta_query][0][compare]=${noStartValue}
+            this.options.uri = this.options.uri + `&filter[meta_query][0][key]=archive&filter[meta_query][0][value]=${archivedValue}`;
         }
 
         if (teamId != null){
