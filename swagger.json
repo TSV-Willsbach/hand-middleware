@@ -87,6 +87,15 @@
 			],
 			"type": "object"
 		},
+		"PostCustomAttributes": {
+			"properties": {
+				"hide_start": {
+					"type": "boolean",
+					"x-nullable": true
+				}
+			},
+			"type": "object"
+		},
 		"Post": {
 			"properties": {
 				"id": {
@@ -137,6 +146,10 @@
 				},
 				"picture": {
 					"$ref": "#/definitions/Picture",
+					"x-nullable": true
+				},
+				"customAttr": {
+					"$ref": "#/definitions/PostCustomAttributes",
 					"x-nullable": true
 				}
 			},
@@ -817,6 +830,13 @@
 						"required": false,
 						"format": "double",
 						"type": "number"
+					},
+					{
+						"default": true,
+						"in": "query",
+						"name": "hide_start",
+						"required": false,
+						"type": "boolean"
 					},
 					{
 						"in": "query",

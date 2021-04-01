@@ -8,8 +8,8 @@ import { wpPostService } from '../services/wordPress/wpPostService';
 export class WpController extends Controller {
 
     @Get('/posts/')
-    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() sticky?: boolean): Promise<Posts> {
-        return await new wpPostService().getPosts(page, category, sticky);
+    public async getPosts(@Query() page?: number, @Query() category?: number, @Query() hide_start: boolean = true , @Query() sticky?: boolean): Promise<Posts> {
+        return await new wpPostService().getPosts(page, category, hide_start, sticky);
     }
 
     @Get('/posts/{id}')
