@@ -26,7 +26,7 @@ export class wpPostService extends wordpressService {
 
         if (hide_start != null){
             let noStartValue;
-            if(hide_start === false){
+            if(hide_start === true){
                 noStartValue = "NOT EXISTS";
             } else {
                 noStartValue = "EXISTS";
