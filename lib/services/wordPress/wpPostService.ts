@@ -10,6 +10,7 @@ export class wpPostService extends wordpressService {
     }
 
     public getPosts(page?: number, category?: number, hide_start?: boolean, sticky?: boolean) {
+        let secondFilter;
         this.options.uri = this.uri + 'posts' +  `?_embed&per_page=9`;
 
         if (page != null) {
@@ -28,13 +29,21 @@ export class wpPostService extends wordpressService {
             let noStartValue;
             if(hide_start === true){
                 noStartValue = "NOT EXISTS";
+                secondFilter = "&filter[meta_query][1][key]=hide_start&filter[meta_query][1][value]=0&filter[meta_query][1][compare]==";
             } else {
                 noStartValue = "EXISTS";
             }
-            this.options.uri = this.options.uri + `&filter[meta_key]=hide_start&filter[meta_compare]=${noStartValue}&filter[meta_value]=1`;
+            let firstFilter = `&filter[meta_query][0][key]=hide_start&filter[meta_query][0][compare]=${noStartValue}&filter[meta_query][0][value]=1`;
+            
+            if (secondFilter !== undefined) {
+                this.options.uri = this.options.uri + "&filter[meta_query][relation]=OR" + firstFilter + secondFilter;
+
+            } else{
+                this.options.uri = this.options.uri + firstFilter;
+            }
+            
+            
         }
-
-
         this.options.resolveWithFullResponse = true;
         return this.request
             .get(this.options)
