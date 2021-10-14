@@ -46,6 +46,71 @@
 			],
 			"type": "object"
 		},
+		"playerStat": {
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"preName": {
+					"type": "string"
+				},
+				"games": {
+					"type": "number",
+					"format": "double"
+				},
+				"penalties": {
+					"type": "number",
+					"format": "double"
+				},
+				"penaltyGoals": {
+					"type": "number",
+					"format": "double"
+				},
+				"penaltyQuota": {
+					"type": "number",
+					"format": "double"
+				},
+				"yellowCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"twoMinutes": {
+					"type": "number",
+					"format": "double"
+				},
+				"redCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"blueCard": {
+					"type": "number",
+					"format": "double"
+				},
+				"goals": {
+					"type": "number",
+					"format": "double"
+				},
+				"goalsPerGame": {
+					"type": "number",
+					"format": "double"
+				}
+			},
+			"required": [
+				"name",
+				"preName",
+				"games",
+				"penalties",
+				"penaltyGoals",
+				"penaltyQuota",
+				"yellowCard",
+				"twoMinutes",
+				"redCard",
+				"blueCard",
+				"goals",
+				"goalsPerGame"
+			],
+			"type": "object"
+		},
 		"Tag": {
 			"properties": {
 				"id": {
@@ -293,71 +358,6 @@
 				"archived",
 				"alt_text",
 				"description"
-			],
-			"type": "object"
-		},
-		"playerStat": {
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"preName": {
-					"type": "string"
-				},
-				"games": {
-					"type": "number",
-					"format": "double"
-				},
-				"penalties": {
-					"type": "number",
-					"format": "double"
-				},
-				"penaltyGoals": {
-					"type": "number",
-					"format": "double"
-				},
-				"penaltyQuota": {
-					"type": "number",
-					"format": "double"
-				},
-				"yellowCard": {
-					"type": "number",
-					"format": "double"
-				},
-				"twoMinutes": {
-					"type": "number",
-					"format": "double"
-				},
-				"redCard": {
-					"type": "number",
-					"format": "double"
-				},
-				"blueCard": {
-					"type": "number",
-					"format": "double"
-				},
-				"goals": {
-					"type": "number",
-					"format": "double"
-				},
-				"goalsPerGame": {
-					"type": "number",
-					"format": "double"
-				}
-			},
-			"required": [
-				"name",
-				"preName",
-				"games",
-				"penalties",
-				"penaltyGoals",
-				"penaltyQuota",
-				"yellowCard",
-				"twoMinutes",
-				"redCard",
-				"blueCard",
-				"goals",
-				"goalsPerGame"
 			],
 			"type": "object"
 		},
@@ -670,6 +670,55 @@
 		}
 	},
 	"paths": {
+		"/clubs": {
+			"get": {
+				"operationId": "GetClubs",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Clubs"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/clubs/{id}": {
+			"get": {
+				"operationId": "GetSingleClub",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Clubs"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
 		"/players": {
 			"post": {
 				"operationId": "AddNewPlayer",
@@ -794,6 +843,126 @@
 						"schema": {
 							"$ref": "#/definitions/Player"
 						}
+					}
+				]
+			}
+		},
+		"/teams": {
+			"get": {
+				"operationId": "GetTeams",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/teams/{id}": {
+			"get": {
+				"operationId": "GetSingleTeam",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/teams/{id}/games": {
+			"get": {
+				"operationId": "GetTeamGames",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "saison",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/teams/{id}/statistic": {
+			"get": {
+				"operationId": "GetTeamStatistic",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/playerStat"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Teams"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "saison",
+						"required": false,
+						"type": "string"
 					}
 				]
 			}
@@ -1043,126 +1212,6 @@
 				]
 			}
 		},
-		"/teams": {
-			"get": {
-				"operationId": "GetTeams",
-				"produces": [
-					"application/json"
-				],
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"schema": {
-							"type": "object"
-						}
-					}
-				},
-				"tags": [
-					"Teams"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/teams/{id}": {
-			"get": {
-				"operationId": "GetSingleTeam",
-				"produces": [
-					"application/json"
-				],
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"schema": {
-							"type": "object"
-						}
-					}
-				},
-				"tags": [
-					"Teams"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"type": "string"
-					}
-				]
-			}
-		},
-		"/teams/{id}/games": {
-			"get": {
-				"operationId": "GetTeamGames",
-				"produces": [
-					"application/json"
-				],
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"schema": {
-							"type": "object"
-						}
-					}
-				},
-				"tags": [
-					"Teams"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "query",
-						"name": "saison",
-						"required": false,
-						"type": "string"
-					}
-				]
-			}
-		},
-		"/teams/{id}/statistic": {
-			"get": {
-				"operationId": "GetTeamStatistic",
-				"produces": [
-					"application/json"
-				],
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"schema": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/playerStat"
-							}
-						}
-					}
-				},
-				"tags": [
-					"Teams"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "query",
-						"name": "saison",
-						"required": false,
-						"type": "string"
-					}
-				]
-			}
-		},
 		"/hvw/club": {
 			"get": {
 				"operationId": "GetClubs",
@@ -1277,9 +1326,9 @@
 				]
 			}
 		},
-		"/clubs": {
+		"/playerStatistics/league": {
 			"get": {
-				"operationId": "GetClubs",
+				"operationId": "GetLeaguePlayerStatistic",
 				"produces": [
 					"application/json"
 				],
@@ -1287,39 +1336,141 @@
 					"200": {
 						"description": "Ok",
 						"schema": {
-							"type": "object"
+							"type": "array",
+							"items": {
+								"type": "object"
+							}
 						}
 					}
 				},
 				"tags": [
-					"Clubs"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/clubs/{id}": {
-			"get": {
-				"operationId": "GetSingleClub",
-				"produces": [
-					"application/json"
-				],
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"schema": {
-							"type": "object"
-						}
-					}
-				},
-				"tags": [
-					"Clubs"
+					"Handballstatistiken"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"default": "2122",
+						"in": "query",
+						"name": "season",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "Bezirksliga",
+						"in": "query",
+						"name": "league",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "Herren",
+						"in": "query",
+						"name": "gender",
+						"required": false,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/playerStatistics/player/{playerName}": {
+			"get": {
+				"operationId": "GetPlayerStatistic",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "object"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Handballstatistiken"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"default": "2122",
+						"in": "query",
+						"name": "season",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "Bezirksliga",
+						"in": "query",
+						"name": "league",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "Herren",
+						"in": "query",
+						"name": "gender",
+						"required": false,
+						"type": "string"
+					},
+					{
 						"in": "path",
-						"name": "id",
+						"name": "playerName",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/playerStatistics/team/{teamName}": {
+			"get": {
+				"operationId": "GetTeamStatistic",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "object"
+							}
+						}
+					}
+				},
+				"tags": [
+					"Handballstatistiken"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"default": "2122",
+						"in": "query",
+						"name": "season",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "Bezirksliga",
+						"in": "query",
+						"name": "league",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "Herren",
+						"in": "query",
+						"name": "gender",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"default": "TSV Willsbach",
+						"in": "path",
+						"name": "teamName",
 						"required": true,
 						"type": "string"
 					}
@@ -1339,6 +1490,14 @@
 			"externalDocs": {
 				"description": "More about Handball4all",
 				"url": "https://www.handball4all.de"
+			}
+		},
+		{
+			"name": "Handballstatistiken",
+			"description": "Services that call data from Handballstatistiken.de",
+			"externalDocs": {
+				"description": "More about Handballstatistiken",
+				"url": "https://handballstatistiken.de/"
 			}
 		},
 		{
