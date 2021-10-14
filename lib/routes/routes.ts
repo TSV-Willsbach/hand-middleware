@@ -652,13 +652,13 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getLeaguePlayerStatistic.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/playerStatistics/player',
+    app.get('/playerStatistics/player/:playerName',
         function(request: any, response: any, next: any) {
             const args = {
                 season: { "default": "2122", "in": "query", "name": "season", "dataType": "string" },
                 league: { "default": "Bezirksliga", "in": "query", "name": "league", "dataType": "string" },
                 gender: { "default": "Herren", "in": "query", "name": "gender", "dataType": "string" },
-                playerName: { "in": "query", "name": "playerName", "required": true, "dataType": "any" },
+                playerName: { "in": "path", "name": "playerName", "required": true, "dataType": "any" },
             };
 
             let validatedArgs: any[] = [];
@@ -674,13 +674,13 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getPlayerStatistic.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/playerStatistics/team',
+    app.get('/playerStatistics/team/:teamName',
         function(request: any, response: any, next: any) {
             const args = {
                 season: { "default": "2122", "in": "query", "name": "season", "dataType": "string" },
                 league: { "default": "Bezirksliga", "in": "query", "name": "league", "dataType": "string" },
                 gender: { "default": "Herren", "in": "query", "name": "gender", "dataType": "string" },
-                teamName: { "default": "TSV Willsbach", "in": "query", "name": "teamName", "dataType": "string" },
+                teamName: { "default": "TSV Willsbach", "in": "path", "name": "teamName", "required": true, "dataType": "string" },
             };
 
             let validatedArgs: any[] = [];

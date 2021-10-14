@@ -1372,7 +1372,7 @@
 				]
 			}
 		},
-		"/playerStatistics/player": {
+		"/playerStatistics/player/{playerName}": {
 			"get": {
 				"operationId": "GetPlayerStatistic",
 				"produces": [
@@ -1416,7 +1416,7 @@
 						"type": "string"
 					},
 					{
-						"in": "query",
+						"in": "path",
 						"name": "playerName",
 						"required": true,
 						"type": "string"
@@ -1424,7 +1424,7 @@
 				]
 			}
 		},
-		"/playerStatistics/team": {
+		"/playerStatistics/team/{teamName}": {
 			"get": {
 				"operationId": "GetTeamStatistic",
 				"produces": [
@@ -1469,9 +1469,9 @@
 					},
 					{
 						"default": "TSV Willsbach",
-						"in": "query",
+						"in": "path",
 						"name": "teamName",
-						"required": false,
+						"required": true,
 						"type": "string"
 					}
 				]
