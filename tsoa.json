@@ -11,6 +11,14 @@
                 }
             },
             {
+                "name": "Handballstatistiken",
+                "description": "Services that call data from Handballstatistiken.de",
+                "externalDocs": {
+                    "description": "More about Handballstatistiken",
+                    "url": "https://handballstatistiken.de/"
+                }
+            },
+            {
                 "name": "Wordpress",
                 "description": "All wordpress services"
             }

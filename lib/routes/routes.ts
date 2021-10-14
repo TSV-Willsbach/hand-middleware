@@ -1,10 +1,11 @@
 /* tslint:disable */
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
-import { PlayerController } from './../controllers/playerController';
-import { WpController } from './../controllers/wpController';
-import { TeamController } from './../controllers/teamController';
-import { hvwController } from './../controllers/hvwController';
 import { ClubController } from './../controllers/clubController';
+import { PlayerController } from './../controllers/playerController';
+import { TeamController } from './../controllers/teamController';
+import { WpController } from './../controllers/wpController';
+import { hvwController } from './../controllers/hvwController';
+import { playerStatisticController } from './../controllers/playerStatisticController';
 import * as express from 'express';
 
 const models: TsoaRoute.Models = {
@@ -17,6 +18,22 @@ const models: TsoaRoute.Models = {
             "birthday": { "dataType": "string" },
             "coach": { "dataType": "array", "array": { "dataType": "string" } },
             "team": { "dataType": "array", "array": { "dataType": "string" } },
+        },
+    },
+    "playerStat": {
+        "properties": {
+            "name": { "dataType": "string", "required": true },
+            "preName": { "dataType": "string", "required": true },
+            "games": { "dataType": "double", "required": true },
+            "penalties": { "dataType": "double", "required": true },
+            "penaltyGoals": { "dataType": "double", "required": true },
+            "penaltyQuota": { "dataType": "double", "required": true },
+            "yellowCard": { "dataType": "double", "required": true },
+            "twoMinutes": { "dataType": "double", "required": true },
+            "redCard": { "dataType": "double", "required": true },
+            "blueCard": { "dataType": "double", "required": true },
+            "goals": { "dataType": "double", "required": true },
+            "goalsPerGame": { "dataType": "double", "required": true },
         },
     },
     "Tag": {
@@ -94,22 +111,6 @@ const models: TsoaRoute.Models = {
             "caption": { "dataType": "string" },
             "team": { "dataType": "string" },
             "sponsor": { "ref": "Sponsor" },
-        },
-    },
-    "playerStat": {
-        "properties": {
-            "name": { "dataType": "string", "required": true },
-            "preName": { "dataType": "string", "required": true },
-            "games": { "dataType": "double", "required": true },
-            "penalties": { "dataType": "double", "required": true },
-            "penaltyGoals": { "dataType": "double", "required": true },
-            "penaltyQuota": { "dataType": "double", "required": true },
-            "yellowCard": { "dataType": "double", "required": true },
-            "twoMinutes": { "dataType": "double", "required": true },
-            "redCard": { "dataType": "double", "required": true },
-            "blueCard": { "dataType": "double", "required": true },
-            "goals": { "dataType": "double", "required": true },
-            "goalsPerGame": { "dataType": "double", "required": true },
         },
     },
     "Goals": {
@@ -207,6 +208,43 @@ const models: TsoaRoute.Models = {
 const validationService = new ValidationService(models);
 
 export function RegisterRoutes(app: express.Express) {
+    app.get('/clubs',
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ClubController();
+
+
+            const promise = controller.getClubs.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/clubs/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ClubController();
+
+
+            const promise = controller.getSingleClub.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
     app.post('/players',
         function(request: any, response: any, next: any) {
             const args = {
@@ -300,6 +338,83 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.updatePlayer.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams',
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getTeams.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams/:id',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams/:id/games',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+                saison: { "in": "query", "name": "saison", "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getTeamGames.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/teams/:id/statistic',
+        function(request: any, response: any, next: any) {
+            const args = {
+                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+                saison: { "in": "query", "name": "saison", "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TeamController();
+
+
+            const promise = controller.getTeamStatistic.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     app.get('/wp/posts',
@@ -441,83 +556,6 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getSponsors.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/teams',
-        function(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new TeamController();
-
-
-            const promise = controller.getTeams.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.get('/teams/:id',
-        function(request: any, response: any, next: any) {
-            const args = {
-                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new TeamController();
-
-
-            const promise = controller.getSingleTeam.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.get('/teams/:id/games',
-        function(request: any, response: any, next: any) {
-            const args = {
-                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
-                saison: { "in": "query", "name": "saison", "dataType": "string" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new TeamController();
-
-
-            const promise = controller.getTeamGames.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    app.get('/teams/:id/statistic',
-        function(request: any, response: any, next: any) {
-            const args = {
-                id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
-                saison: { "in": "query", "name": "saison", "dataType": "string" },
-            };
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller = new TeamController();
-
-
-            const promise = controller.getTeamStatistic.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
     app.get('/hvw/club',
         function(request: any, response: any, next: any) {
             const args = {
@@ -593,9 +631,12 @@ export function RegisterRoutes(app: express.Express) {
             const promise = controller.getLigue.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/clubs',
+    app.get('/playerStatistics/league',
         function(request: any, response: any, next: any) {
             const args = {
+                season: { "default": "2122", "in": "query", "name": "season", "dataType": "string" },
+                league: { "default": "Bezirksliga", "in": "query", "name": "league", "dataType": "string" },
+                gender: { "default": "Herren", "in": "query", "name": "gender", "dataType": "string" },
             };
 
             let validatedArgs: any[] = [];
@@ -605,16 +646,19 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new ClubController();
+            const controller = new playerStatisticController();
 
 
-            const promise = controller.getClubs.apply(controller, validatedArgs as any);
+            const promise = controller.getLeaguePlayerStatistic.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
-    app.get('/clubs/:id',
+    app.get('/playerStatistics/player/:playerName',
         function(request: any, response: any, next: any) {
             const args = {
-                ID: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+                season: { "default": "2122", "in": "query", "name": "season", "dataType": "string" },
+                league: { "default": "Bezirksliga", "in": "query", "name": "league", "dataType": "string" },
+                gender: { "default": "Herren", "in": "query", "name": "gender", "dataType": "string" },
+                playerName: { "in": "path", "name": "playerName", "required": true, "dataType": "any" },
             };
 
             let validatedArgs: any[] = [];
@@ -624,10 +668,32 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new ClubController();
+            const controller = new playerStatisticController();
 
 
-            const promise = controller.getSingleClub.apply(controller, validatedArgs as any);
+            const promise = controller.getPlayerStatistic.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    app.get('/playerStatistics/team/:teamName',
+        function(request: any, response: any, next: any) {
+            const args = {
+                season: { "default": "2122", "in": "query", "name": "season", "dataType": "string" },
+                league: { "default": "Bezirksliga", "in": "query", "name": "league", "dataType": "string" },
+                gender: { "default": "Herren", "in": "query", "name": "gender", "dataType": "string" },
+                teamName: { "default": "TSV Willsbach", "in": "path", "name": "teamName", "required": true, "dataType": "string" },
+            };
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new playerStatisticController();
+
+
+            const promise = controller.getTeamStatistic.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
 

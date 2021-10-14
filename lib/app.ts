@@ -12,6 +12,7 @@ import './controllers/playerController';
 import './controllers/teamController';
 import './controllers/wpController';
 import './controllers/hvwController';
+import './controllers/playerStatisticController';
 
 let cache = apicache.middleware;
 
